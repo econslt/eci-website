@@ -1,0 +1,1224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ECI – Governance, Risk & Compliance Solutions | eConsultants, Inc.</title>
+  <meta name="description" content="eConsultants, Inc. empowers organizations through expert GRC, ISO 27001, FISMA, FedRAMP, and CMMC cybersecurity consulting since 2000." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #080d18;
+      --bg-2: #0d1423;
+      --bg-3: #111c30;
+      --bg-card: #0f1928;
+      --cyan: #3a84d0;
+      --cyan-dark: #2166b0;
+      --cyan-pale: rgba(58,132,208,0.1);
+      --cyan-border: rgba(58,132,208,0.22);
+      --red: #cc2929;
+      --red-pale: rgba(204,41,41,0.1);
+      --white: #ffffff;
+      --off-white: #e2e8f0;
+      --muted: #94a3b8;
+      --border: rgba(255,255,255,0.07);
+      --border-light: rgba(255,255,255,0.12);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--off-white);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: #ffffff;
+      backdrop-filter: none;
+      border-bottom: 1px solid rgba(0,0,0,0.1);
+    }
+
+    .nav-inner {
+      max-width: 1200px; margin: 0 auto;
+      padding: 0 2rem; height: 72px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+
+    .logo { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; }
+
+    /* logo image handled inline */
+
+    .nav-links { display: flex; align-items: center; gap: 0.25rem; list-style: none; }
+
+    .nav-links a {
+      color: #374151; text-decoration: none;
+      font-size: 0.875rem; font-weight: 500;
+      padding: 0.45rem 0.9rem; border-radius: 6px;
+      transition: color 0.15s, background 0.15s;
+    }
+
+    .nav-links a:hover { color: var(--cyan-dark); background: rgba(58,132,208,0.07); }
+
+    .nav-cta {
+      background: var(--cyan) !important;
+      color: var(--bg) !important;
+      font-weight: 700 !important;
+      border-radius: 8px !important;
+      padding: 0.5rem 1.25rem !important;
+    }
+
+    .nav-cta:hover { background: var(--cyan-dark) !important; }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding: 7rem 2rem 5rem;
+      position: relative; overflow: hidden;
+      background: radial-gradient(ellipse 80% 60% at 50% -20%, rgba(58,132,208,0.15) 0%, rgba(204,41,41,0.06) 50%, transparent 70%);
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%233a84d0' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      max-width: 1200px; margin: 0 auto; width: 100%;
+      display: grid; grid-template-columns: 1.1fr 0.9fr;
+      gap: 4rem; align-items: center; position: relative;
+    }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: var(--red-pale); border: 1px solid rgba(204,41,41,0.3);
+      color: var(--red); font-size: 0.75rem; font-weight: 600;
+      padding: 0.35rem 0.9rem; border-radius: 100px;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-badge::before { content: '●'; font-size: 0.5rem; }
+
+    .hero h1 {
+      font-family: 'Hanken Grotesk', sans-serif;
+      font-size: 4rem; font-weight: 900;
+      color: var(--white); line-height: 1.1;
+      letter-spacing: -1.5px; margin-bottom: 1.5rem;
+    }
+
+    .hero h1 .accent { color: var(--red); }
+
+    .hero p {
+      font-size: 1.05rem; color: var(--muted);
+      line-height: 1.75; margin-bottom: 2.5rem;
+      font-weight: 300; max-width: 520px;
+    }
+
+    .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 3rem; }
+
+    .btn-cyan {
+      background: var(--cyan); color: var(--bg);
+      padding: 0.875rem 2rem; border-radius: 8px;
+      font-weight: 700; font-size: 0.9rem;
+      text-decoration: none; display: inline-block;
+      transition: background 0.15s, transform 0.1s;
+      font-family: 'Hanken Grotesk', sans-serif;
+    }
+
+    .btn-cyan:hover { background: var(--cyan-dark); transform: translateY(-1px); }
+
+    .btn-outline {
+      background: transparent; color: var(--white);
+      padding: 0.875rem 2rem; border-radius: 8px;
+      font-weight: 600; font-size: 0.9rem;
+      text-decoration: none; display: inline-block;
+      border: 1px solid var(--border-light);
+      transition: border-color 0.15s, background 0.15s;
+      font-family: 'Hanken Grotesk', sans-serif;
+    }
+
+    .btn-outline:hover { border-color: var(--cyan); background: var(--cyan-pale); }
+
+    .hero-certs { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+
+    .cert-badge {
+      background: var(--bg-card); border: 1px solid var(--border);
+      padding: 0.4rem 0.85rem; border-radius: 6px;
+      font-size: 0.72rem; font-weight: 600; color: var(--muted);
+    }
+
+    /* HERO VISUAL */
+    .hero-visual { position: relative; }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInLeft {
+      from { opacity: 0; transform: translateX(-30px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+
+    .hero-img-wrap {
+      display: flex; align-items: center; justify-content: center;
+      animation: fadeInUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.3s both;
+    }
+
+    .hero-img-wrap img {
+      width: 100%; max-width: 480px;
+      height: auto;
+      filter: drop-shadow(0 0 60px rgba(58,132,208,0.25)) drop-shadow(0 20px 40px rgba(0,0,0,0.5));
+      transition: filter 0.3s;
+    }
+
+    .hero-img-wrap img:hover {
+      filter: drop-shadow(0 0 80px rgba(58,132,208,0.4)) drop-shadow(0 20px 40px rgba(0,0,0,0.5));
+    }
+
+    .hero-left-anim {
+      animation: fadeInLeft 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both;
+    }
+
+    /* TRUST */
+    .trust-section {
+      padding: 3rem 2rem;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .trust-inner { max-width: 1200px; margin: 0 auto; }
+
+    .trust-label {
+      text-align: center; font-size: 0.78rem; font-weight: 500;
+      color: var(--muted); text-transform: uppercase;
+      letter-spacing: 1.5px; margin-bottom: 2rem;
+    }
+
+    .trust-logos {
+      display: flex; justify-content: center;
+      align-items: center; gap: 3rem; flex-wrap: wrap;
+    }
+
+    .trust-logo {
+      background: var(--bg-card); border: 1px solid var(--border);
+      padding: 0.6rem 1.25rem; border-radius: 8px;
+      font-size: 0.78rem; font-weight: 700;
+      color: var(--muted); letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    /* SECTION */
+    .section { padding: 6rem 2rem; }
+    .section-inner { max-width: 1200px; margin: 0 auto; }
+
+    .section-eyebrow {
+      text-align: center; font-size: 0.75rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 2px;
+      color: var(--red); margin-bottom: 1rem;
+    }
+
+    .section-h {
+      font-family: 'Hanken Grotesk', sans-serif;
+      font-size: 2.75rem; font-weight: 800;
+      color: var(--white); line-height: 1.15;
+      letter-spacing: -1px; text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    .section-sub {
+      font-size: 1rem; color: var(--muted); line-height: 1.75;
+      text-align: center; max-width: 560px;
+      margin: 0 auto 3.5rem; font-weight: 300;
+    }
+
+    /* SERVICES */
+    .services-section { background: var(--bg-2); }
+
+    .services-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .svc-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px; padding: 2rem;
+      transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+    }
+
+    .svc-card:hover {
+      border-color: var(--cyan-border);
+      box-shadow: 0 0 30px rgba(58,132,208,0.08);
+      transform: translateY(-3px);
+    }
+
+    .svc-icon {
+      width: 52px; height: 52px;
+      background: var(--cyan-pale); border: 1px solid var(--cyan-border);
+      border-radius: 12px; font-size: 1.5rem;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 1.25rem;
+    }
+
+    .svc-card h3 {
+      font-family: 'Hanken Grotesk', sans-serif;
+      font-size: 1.05rem; font-weight: 700;
+      color: var(--white); margin-bottom: 0.6rem;
+    }
+
+    .svc-card p { font-size: 0.85rem; color: var(--muted); line-height: 1.65; margin-bottom: 1rem; }
+
+    .svc-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+
+    .svc-tag {
+      font-size: 0.68rem; font-weight: 600;
+      background: var(--bg-3); color: var(--muted);
+      padding: 0.2rem 0.6rem; border-radius: 100px;
+      border: 1px solid var(--border);
+    }
+
+    /* ABOUT / SPLIT */
+    .split-section { background: var(--bg); }
+
+    .split-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 5rem; align-items: center;
+    }
+
+    .split-grid.reverse { direction: rtl; }
+    .split-grid.reverse > * { direction: ltr; }
+
+    .split-eyebrow {
+      font-size: 0.72rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 2px;
+      color: var(--cyan); margin-bottom: 1rem;
+    }
+
+    .split-h {
+      font-family: 'Hanken Grotesk', sans-serif;
+      font-size: 2.25rem; font-weight: 800;
+      color: var(--white); line-height: 1.2;
+      letter-spacing: -0.75px; margin-bottom: 1rem;
+    }
+
+    .split-p { font-size: 0.95rem; color: var(--muted); line-height: 1.8; font-weight: 300; margin-bottom: 1.5rem; }
+
+    .split-visual {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 20px; padding: 2.5rem;
+      box-shadow: 0 0 40px rgba(58,132,208,0.06);
+    }
+
+    .check-list { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
+
+    .check-list li {
+      display: flex; gap: 0.75rem; align-items: flex-start;
+      font-size: 0.87rem; color: var(--off-white);
+    }
+
+    .check-list li::before {
+      content: '✓'; color: var(--cyan); font-weight: 700;
+      flex-shrink: 0; margin-top: 1px;
+    }
+
+    .stat-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
+      background: var(--border); border: 1px solid var(--border);
+      border-radius: 12px; overflow: hidden;
+    }
+
+    .stat-cell {
+      background: var(--bg-card); padding: 1.5rem; text-align: center;
+    }
+
+    .stat-num {
+      font-family: 'Hanken Grotesk', sans-serif;
+      font-size: 2.5rem; font-weight: 900;
+      color: var(--cyan); line-height: 1;
+    }
+
+    .stat-label { font-size: 0.78rem; color: var(--muted); margin-top: 0.25rem; }
+
+    /* PROCESS */
+    .process-section { background: var(--bg-2); }
+
+    .process-steps {
+      display: grid; grid-template-columns: repeat(5, 1fr);
+      gap: 0; position: relative; margin-top: 3rem;
+    }
+
+    .process-steps::before {
+      content: '';
+      position: absolute; top: 28px; left: 10%; right: 10%;
+      height: 1px; background: linear-gradient(to right, transparent, var(--cyan-border), transparent);
+    }
+
+    .step-item { text-align: center; padding: 0 1rem; position: relative; }
+
+    .step-circle {
+      width: 56px; height: 56px;
+      background: var(--bg-card); border: 2px solid var(--cyan-border);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1.25rem;
+      font-family: 'Hanken Grotesk', sans-serif;
+      font-weight: 900; font-size: 1rem; color: var(--cyan);
+    }
+
+    .step-item h4 {
+      font-family: 'Hanken Grotesk', sans-serif;
+      font-size: 0.85rem; font-weight: 700;
+      color: var(--white); margin-bottom: 0.5rem;
+    }
+
+    .step-item p { font-size: 0.78rem; color: var(--muted); line-height: 1.55; }
+
+    /* CERTS */
+    .certs-section { background: var(--bg); }
+
+    .certs-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 1.25rem; margin-top: 0;
+    }
+
+    .cert-card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 12px; padding: 1.75rem;
+      text-align: center; transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .cert-card:hover { border-color: var(--cyan-border); transform: translateY(-2px); }
+
+    .cert-card-icon { height: 72px; display: flex; align-items: center; justify-content: center; margin-bottom: 0.75rem; }
+    .cert-card-icon img { max-height: 72px; max-width: 100px; width: auto; object-fit: contain; }
+
+    .cert-card h4 {
+      font-family: 'Hanken Grotesk', sans-serif;
+      font-size: 0.85rem; font-weight: 700; color: var(--white);
+      margin-bottom: 0.35rem;
+    }
+
+    .cert-card p { font-size: 0.75rem; color: var(--muted); }
+
+    /* FAQ */
+    .faq-section { background: var(--bg-2); }
+
+    .faq-list { max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; gap: 0.75rem; }
+
+    .faq-item {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 12px; overflow: hidden;
+      transition: border-color 0.2s;
+    }
+
+    .faq-item.open { border-color: var(--cyan-border); }
+
+    .faq-q {
+      padding: 1.25rem 1.5rem;
+      font-family: 'Hanken Grotesk', sans-serif;
+      font-weight: 600; font-size: 0.92rem;
+      color: var(--white); cursor: pointer;
+      display: flex; justify-content: space-between; align-items: center;
+      gap: 1rem; user-select: none;
+    }
+
+    .faq-toggle {
+      width: 26px; height: 26px; border-radius: 50%;
+      background: var(--bg-3); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; color: var(--cyan); flex-shrink: 0;
+      transition: transform 0.25s, background 0.2s;
+    }
+
+    .faq-item.open .faq-toggle { transform: rotate(45deg); background: var(--cyan-pale); }
+
+    .faq-a {
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.3s ease;
+      font-size: 0.87rem; color: var(--muted); line-height: 1.7;
+    }
+
+    .faq-a-inner { padding: 0 1.5rem 1.25rem; }
+    .faq-item.open .faq-a { max-height: 200px; }
+
+    /* CTA */
+    .cta-section {
+      background: linear-gradient(135deg, var(--bg-2) 0%, var(--bg-3) 100%);
+      padding: 6rem 2rem; text-align: center;
+      position: relative; overflow: hidden;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .cta-section::before {
+      content: '';
+      position: absolute; top: -100px; left: 50%; transform: translateX(-50%);
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(58,132,208,0.12) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .cta-section h2 {
+      font-family: 'Hanken Grotesk', sans-serif;
+      font-size: 3rem; font-weight: 900;
+      color: var(--white); letter-spacing: -1px;
+      margin-bottom: 1rem; position: relative;
+    }
+
+    .cta-section p {
+      font-size: 1rem; color: var(--muted);
+      margin-bottom: 2.5rem; max-width: 500px; margin-left: auto; margin-right: auto;
+      position: relative;
+    }
+
+    .cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; position: relative; }
+
+    /* CONTACT */
+    .contact-section { background: var(--bg); }
+
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; margin-top: 3rem; }
+
+    .contact-info h3 {
+      font-family: 'Hanken Grotesk', sans-serif;
+      font-size: 1.5rem; font-weight: 800; color: var(--white);
+      margin-bottom: 1rem;
+    }
+
+    .contact-info p { font-size: 0.9rem; color: var(--muted); line-height: 1.75; margin-bottom: 2rem; }
+
+    .info-block { margin-bottom: 1.25rem; }
+    .info-label { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--cyan); margin-bottom: 0.3rem; }
+    .info-value { font-size: 0.9rem; color: var(--off-white); }
+    .info-value a { color: var(--off-white); text-decoration: none; }
+    .info-value a:hover { color: var(--cyan); }
+
+    .contact-form {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 16px; padding: 2.5rem;
+    }
+
+    .contact-form h3 {
+      font-family: 'Hanken Grotesk', sans-serif;
+      font-size: 1.15rem; font-weight: 700; color: var(--white); margin-bottom: 1.5rem;
+    }
+
+    form { display: flex; flex-direction: column; gap: 1rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+    label { display: block; font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); margin-bottom: 0.35rem; }
+
+    input, select, textarea {
+      width: 100%; padding: 0.75rem 1rem;
+      background: var(--bg-3); border: 1px solid var(--border);
+      border-radius: 8px; color: var(--white);
+      font-family: 'Inter', sans-serif; font-size: 0.9rem;
+      outline: none; transition: border-color 0.15s;
+    }
+
+    input:focus, select:focus, textarea:focus { border-color: var(--cyan-border); }
+    select option { background: var(--bg-3); }
+    textarea { resize: vertical; min-height: 100px; }
+
+    .form-submit {
+      background: var(--cyan); color: var(--bg);
+      border: none; border-radius: 8px; padding: 0.9rem;
+      font-family: 'Hanken Grotesk', sans-serif;
+      font-size: 0.9rem; font-weight: 700;
+      cursor: pointer; transition: background 0.15s;
+    }
+
+    .form-submit:hover { background: var(--cyan-dark); }
+
+    /* FOOTER */
+    footer {
+      background: var(--bg-2);
+      border-top: 1px solid var(--border);
+      padding: 3rem 2rem 2rem;
+    }
+
+    .footer-inner { max-width: 1200px; margin: 0 auto; }
+
+    .footer-top {
+      display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr;
+      gap: 3rem; margin-bottom: 3rem;
+    }
+
+    .footer-brand p { font-size: 0.85rem; color: var(--muted); line-height: 1.7; margin-top: 1rem; max-width: 260px; }
+
+    .footer-col h4 {
+      font-family: 'Hanken Grotesk', sans-serif;
+      font-size: 0.82rem; font-weight: 700; color: var(--white);
+      text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1.25rem;
+    }
+
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+    .footer-col ul a { font-size: 0.85rem; color: var(--muted); text-decoration: none; transition: color 0.15s; }
+    .footer-col ul a:hover { color: var(--cyan); }
+
+    .footer-bottom {
+      border-top: 1px solid var(--border); padding-top: 1.5rem;
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;
+    }
+
+    .footer-bottom p { font-size: 0.8rem; color: var(--muted); }
+
+    /* MOBILE */
+    @media (max-width: 900px) {
+      .hero-inner, .split-grid, .contact-grid { grid-template-columns: 1fr; }
+      .services-grid, .certs-grid { grid-template-columns: 1fr 1fr; }
+      .process-steps { grid-template-columns: 1fr 1fr; }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+      .hero h1 { font-size: 2.75rem; }
+      .nav-links { display: none; }
+    }
+
+    /* ── MARQUEE ── */
+    .trust-section { padding: 2.5rem 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); overflow: hidden; }
+    .trust-label { text-align: center; font-size: 0.75rem; font-weight: 500; color: var(--muted); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 1.5rem; padding: 0 2rem; }
+    .marquee-wrap { overflow: hidden; position: relative; }
+    .marquee-wrap::before, .marquee-wrap::after {
+      content: ''; position: absolute; top: 0; bottom: 0; width: 120px; z-index: 2;
+    }
+    .marquee-wrap::before { left: 0; background: linear-gradient(to right, var(--bg), transparent); }
+    .marquee-wrap::after  { right: 0; background: linear-gradient(to left, var(--bg), transparent); }
+    @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+    .marquee-track { display: flex; width: max-content; animation: marquee 28s linear infinite; gap: 1.5rem; }
+    .marquee-track:hover { animation-play-state: paused; }
+    .marquee-item { background: var(--bg-card); border: 1px solid var(--border); padding: 0.65rem 1.6rem; border-radius: 8px; white-space: nowrap; flex-shrink: 0; transition: border-color 0.2s, opacity 0.2s; display: flex; align-items: center; justify-content: center; height: 56px; }
+    .marquee-item:hover { border-color: var(--cyan-border); opacity: 0.9; }
+    .marquee-item img { height: 32px; width: auto; max-width: 120px; object-fit: contain; display: block; opacity: 0.65; transition: opacity 0.2s; }
+    .marquee-item:hover img { opacity: 1; }
+
+    /* ── FRAMEWORKS GRID ── */
+    .frameworks-section { background: var(--bg-2); }
+    .fw-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-top: 3rem; }
+    .fw-cell { background: var(--bg-card); padding: 1.75rem 1.5rem; display: flex; flex-direction: column; gap: 0.6rem; transition: background 0.2s; }
+    .fw-cell:hover { background: var(--bg-3); }
+    .fw-cell-icon { font-size: 1.75rem; }
+    .fw-cell-name { font-family: 'Hanken Grotesk', sans-serif; font-size: 0.92rem; font-weight: 700; color: var(--white); }
+    .fw-cell-desc { font-size: 0.78rem; color: var(--muted); line-height: 1.5; }
+    .fw-cell-tag { display: inline-block; font-size: 0.65rem; font-weight: 700; background: var(--cyan-pale); color: var(--cyan); padding: 0.15rem 0.55rem; border-radius: 100px; align-self: flex-start; }
+
+    /* ── TESTIMONIALS ── */
+    .testimonials-section { background: var(--bg); }
+    .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 3rem; }
+    .testi-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 2rem; display: flex; flex-direction: column; gap: 1.25rem; transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s; }
+    .testi-card:hover { border-color: var(--cyan-border); transform: translateY(-3px); box-shadow: 0 8px 30px rgba(0,0,0,0.3); }
+    .testi-stars { color: var(--cyan); font-size: 0.8rem; letter-spacing: 2px; }
+    .testi-quote { font-size: 0.88rem; color: var(--off-white); line-height: 1.75; font-style: italic; flex: 1; }
+    .testi-quote::before { content: '"'; color: var(--cyan); font-size: 1.5rem; font-style: normal; line-height: 0; vertical-align: -0.4em; margin-right: 0.2rem; }
+    .testi-author { display: flex; align-items: center; gap: 0.875rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+    .testi-avatar { width: 42px; height: 42px; border-radius: 50%; background: linear-gradient(135deg, var(--red), var(--cyan-dark)); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.9rem; color: var(--bg); font-family: 'Hanken Grotesk', sans-serif; flex-shrink: 0; }
+    .testi-name { font-family: 'Hanken Grotesk', sans-serif; font-size: 0.875rem; font-weight: 700; color: var(--white); }
+    .testi-title { font-size: 0.75rem; color: var(--muted); }
+
+    /* ── BLOG ── */
+    .blog-section { background: var(--bg-2); }
+    .blog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 3rem; }
+    .blog-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; transition: border-color 0.2s, transform 0.2s; }
+    .blog-card:hover { border-color: var(--cyan-border); transform: translateY(-3px); }
+    .blog-img { background: var(--bg-3); height: 160px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+    .blog-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .blog-img::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 40%, var(--bg-card)); }
+    .blog-body { padding: 1.5rem; }
+    .blog-meta { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; }
+    .blog-tag { font-size: 0.68rem; font-weight: 700; background: var(--cyan-pale); color: var(--cyan); padding: 0.2rem 0.65rem; border-radius: 100px; }
+    .blog-date { font-size: 0.72rem; color: var(--muted); }
+    .blog-card h4 { font-family: 'Hanken Grotesk', sans-serif; font-size: 0.95rem; font-weight: 700; color: var(--white); line-height: 1.4; margin-bottom: 0.6rem; }
+    .blog-card p { font-size: 0.82rem; color: var(--muted); line-height: 1.6; margin-bottom: 1rem; }
+    .blog-read { font-size: 0.8rem; font-weight: 700; color: var(--cyan); text-decoration: none; display: inline-flex; align-items: center; gap: 0.35rem; transition: gap 0.2s; }
+    .blog-read:hover { gap: 0.6rem; }
+    .blog-cta { text-align: center; margin-top: 2.5rem; }
+
+    /* ── ENHANCED CTA ── */
+    .cta-section { position: relative; overflow: hidden; }
+
+    /* ── SCROLL REVEAL ── */
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1); }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+    .reveal-delay-5 { transition-delay: 0.5s; }
+
+    /* ── COUNTER ── */
+    .stat-num[data-target] { transition: none; }
+
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="logo">
+      <img src="images/eci-logo.png" alt="eConsultants Inc." style="height:44px;width:auto;" />
+    </a>
+    <ul class="nav-links">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#certifications">Credentials</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#contact" class="nav-cta">Get Started</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-left-anim">
+<h1>Empowering Excellence via <span class="accent">Governance, Risk &amp; Compliance</span></h1>
+      <p>eConsultants, Inc. partners with public and private sector organizations to safeguard digital environments against evolving cyber threats — through practical, implementable GRC solutions.</p>
+      <div class="hero-btns">
+        <a href="#contact" class="btn-cyan">Schedule a Consultation</a>
+        <a href="#services" class="btn-outline">Explore Services</a>
+      </div>
+      <div class="hero-certs">
+        <span class="cert-badge">CISSP</span>
+        <span class="cert-badge">CISA</span>
+        <span class="cert-badge">ISO 27001</span>
+        <span class="cert-badge">CMMC RP</span>
+        <span class="cert-badge">FedRAMP</span>
+        <span class="cert-badge">PMP</span>
+      </div>
+    </div>
+    <div class="hero-img-wrap">
+      <img src="images/data-protection.png" alt="ECI Data Protection" />
+    </div>
+  </div>
+</section>
+
+<!-- TRUST MARQUEE -->
+<div class="trust-section">
+  <div class="trust-label">Trusted by public and private sector organizations across the US &amp; UAE</div>
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <div class="marquee-item"><img src="images/logo-dod.svg" alt="U.S. Department of Defense" /></div>
+      <div class="marquee-item"><img src="images/logo-federal.svg" alt="Federal Agencies" /></div>
+      <div class="marquee-item"><img src="images/logo-nist.svg" alt="NIST" /></div>
+      <div class="marquee-item"><img src="images/logo-iso.svg" alt="ISO 27001" /></div>
+      <div class="marquee-item"><img src="images/logo-cmmc.svg" alt="CMMC / Cyber AB" /></div>
+      <div class="marquee-item"><img src="images/logo-uae.svg" alt="UAE Government" /></div>
+      <div class="marquee-item"><img src="images/logo-fedramp.svg" alt="FedRAMP" /></div>
+      <div class="marquee-item"><img src="images/logo-fisma.svg" alt="FISMA" /></div>
+      <div class="marquee-item"><img src="images/logo-rmf.svg" alt="NIST RMF" /></div>
+      <!-- duplicate for infinite loop -->
+      <div class="marquee-item"><img src="images/logo-dod.svg" alt="U.S. Department of Defense" /></div>
+      <div class="marquee-item"><img src="images/logo-federal.svg" alt="Federal Agencies" /></div>
+      <div class="marquee-item"><img src="images/logo-nist.svg" alt="NIST" /></div>
+      <div class="marquee-item"><img src="images/logo-iso.svg" alt="ISO 27001" /></div>
+      <div class="marquee-item"><img src="images/logo-cmmc.svg" alt="CMMC / Cyber AB" /></div>
+      <div class="marquee-item"><img src="images/logo-uae.svg" alt="UAE Government" /></div>
+      <div class="marquee-item"><img src="images/logo-fedramp.svg" alt="FedRAMP" /></div>
+      <div class="marquee-item"><img src="images/logo-fisma.svg" alt="FISMA" /></div>
+      <div class="marquee-item"><img src="images/logo-rmf.svg" alt="NIST RMF" /></div>
+    </div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section class="section services-section" id="services">
+  <div class="section-inner">
+    <div class="section-eyebrow">What We Do</div>
+    <h2 class="section-h">Advanced GRC &amp; Cybersecurity Solutions</h2>
+    <p class="section-sub">End-to-end consulting services designed to protect your digital environment, meet regulatory requirements, and build lasting resilience.</p>
+    <div class="services-grid">
+      <div class="svc-card">
+        <div class="svc-icon">🛡️</div>
+        <h3>Governance, Risk &amp; Compliance</h3>
+        <p>Comprehensive GRC framework development, policy creation, and regulatory assistance tailored to your organization's risk profile.</p>
+        <div class="svc-tags">
+          <span class="svc-tag">Framework Development</span>
+          <span class="svc-tag">Policy Creation</span>
+          <span class="svc-tag">Risk Assessment</span>
+        </div>
+      </div>
+      <div class="svc-card">
+        <div class="svc-icon">🔐</div>
+        <h3>ISO/IEC 27001 Compliance</h3>
+        <p>Gap analysis, ISMS development, and full certification support to achieve and maintain ISO 27001 compliance at scale.</p>
+        <div class="svc-tags">
+          <span class="svc-tag">Gap Analysis</span>
+          <span class="svc-tag">ISMS Development</span>
+          <span class="svc-tag">Certification Support</span>
+        </div>
+      </div>
+      <div class="svc-card">
+        <div class="svc-icon">🔍</div>
+        <h3>Vulnerability Assessments</h3>
+        <p>Systematic scanning, penetration testing, and actionable remediation guidance to identify and eliminate security weaknesses.</p>
+        <div class="svc-tags">
+          <span class="svc-tag">Pen Testing</span>
+          <span class="svc-tag">Scanning</span>
+          <span class="svc-tag">Remediation</span>
+        </div>
+      </div>
+      <div class="svc-card">
+        <div class="svc-icon">🏛️</div>
+        <h3>U.S. Federal InfoSec</h3>
+        <p>Expert support for FISMA, FedRAMP, CMMC, FISCAM, and RMF compliance requirements for federal contractors and agencies.</p>
+        <div class="svc-tags">
+          <span class="svc-tag">FISMA</span>
+          <span class="svc-tag">FedRAMP</span>
+          <span class="svc-tag">CMMC</span>
+          <span class="svc-tag">RMF</span>
+        </div>
+      </div>
+      <div class="svc-card">
+        <div class="svc-icon">🌐</div>
+        <h3>UAE Security &amp; Privacy</h3>
+        <p>Implementation of UAE IAF and NESA Standards, delivering compliance for organizations operating in the UAE and broader MENA region.</p>
+        <div class="svc-tags">
+          <span class="svc-tag">IAF</span>
+          <span class="svc-tag">NESA Standards</span>
+          <span class="svc-tag">Privacy</span>
+        </div>
+      </div>
+      <div class="svc-card" style="background: linear-gradient(135deg, rgba(58,132,208,0.08), rgba(58,132,208,0.03)); border-color: var(--cyan-border);">
+        <div class="svc-icon">📋</div>
+        <h3>Custom Security Programs</h3>
+        <p>From security program inception to maturity assessments — we build tailored security programs for organizations at any stage.</p>
+        <div class="svc-tags">
+          <span class="svc-tag">Maturity Modeling</span>
+          <span class="svc-tag">Program Design</span>
+          <span class="svc-tag">Air-Gapped Envs</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="section split-section" id="about">
+  <div class="section-inner">
+    <div class="split-grid">
+      <div>
+        <div class="split-eyebrow">About ECI</div>
+        <h2 class="split-h">Trusted cybersecurity expertise since 2000</h2>
+        <p class="split-p">eConsultants, Inc. (ECI) has provided specialized GRC and information security consulting to public and private sector clients across the United States and UAE for over two decades. Our team delivers customized solutions to complex challenges — backed by deep regulatory expertise and practical, implementable recommendations.</p>
+        <p class="split-p">Led by Dr. Carlos A. Thomas, Managing Principal, our firm brings executive-level expertise in NIST RMF, Information Assurance, and ISO 27000/31000 programs to every engagement.</p>
+        <a href="#contact" class="btn-cyan">Work With Us</a>
+      </div>
+      <div class="split-visual">
+        <div class="stat-grid" style="margin-bottom: 1.5rem;">
+          <div class="stat-cell"><div class="stat-num">25+</div><div class="stat-label">Years Experience</div></div>
+          <div class="stat-cell"><div class="stat-num">US &amp; UAE</div><div class="stat-label">Regions Served</div></div>
+          <div class="stat-cell"><div class="stat-num">100+</div><div class="stat-label">Clients Served</div></div>
+          <div class="stat-cell"><div class="stat-num">10+</div><div class="stat-label">Certifications</div></div>
+        </div>
+        <ul class="check-list">
+          <li>Holistic approach addressing governance, risk, and compliance simultaneously</li>
+          <li>Customized strategies aligned to your organization's specific needs</li>
+          <li>Practical, implementable recommendations — not just reports</li>
+          <li>Deep expertise in both federal and commercial frameworks</li>
+          <li>Ongoing support throughout the compliance lifecycle</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="section process-section">
+  <div class="section-inner">
+    <div class="section-eyebrow">Our Approach</div>
+    <h2 class="section-h">How We Work: A 5-Step Process</h2>
+    <p class="section-sub">A structured, proven methodology that takes you from assessment to ongoing compliance with confidence.</p>
+    <div class="process-steps">
+      <div class="step-item">
+        <div class="step-circle">01</div>
+        <h4>Discovery &amp; Assessment</h4>
+        <p>We evaluate your current security posture, identify gaps, and understand your regulatory obligations.</p>
+      </div>
+      <div class="step-item">
+        <div class="step-circle">02</div>
+        <h4>Strategy &amp; Planning</h4>
+        <p>We develop a tailored roadmap aligned to your business goals and compliance requirements.</p>
+      </div>
+      <div class="step-item">
+        <div class="step-circle">03</div>
+        <h4>Implementation</h4>
+        <p>We execute the plan — building frameworks, policies, and controls that meet your standards.</p>
+      </div>
+      <div class="step-item">
+        <div class="step-circle">04</div>
+        <h4>Testing &amp; Validation</h4>
+        <p>We validate effectiveness through vulnerability assessments, audits, and compliance reviews.</p>
+      </div>
+      <div class="step-item">
+        <div class="step-circle">05</div>
+        <h4>Ongoing Support</h4>
+        <p>We provide continuous monitoring, updates, and advisory as regulations and threats evolve.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section class="section certs-section" id="certifications">
+  <div class="section-inner">
+    <div class="section-eyebrow">Credentials</div>
+    <h2 class="section-h">Industry-Leading Certifications</h2>
+    <p class="section-sub">Our team holds the certifications that matter most across federal, commercial, and international security frameworks.</p>
+    <div class="certs-grid">
+      <div class="cert-card">
+        <div class="cert-card-icon"><img src="images/cert-cissp.png" alt="CISSP" /></div>
+        <h4>CISSP</h4>
+        <p>Certified Information Systems Security Professional</p>
+      </div>
+      <div class="cert-card">
+        <div class="cert-card-icon"><img src="images/cert-cisa.png" alt="CISA" /></div>
+        <h4>CISA</h4>
+        <p>Certified Information Systems Auditor</p>
+      </div>
+      <div class="cert-card">
+        <div class="cert-card-icon"><img src="images/cert-pecb.png" alt="PECB ISO 27001 Lead Auditor" /></div>
+        <h4>ISO 27001 Lead Auditor</h4>
+        <p>PECB Certified ISO/IEC 27001 Lead Auditor</p>
+      </div>
+      <div class="cert-card">
+        <div class="cert-card-icon"><img src="images/cert-cap.png" alt="CMMC RP" /></div>
+        <h4>CMMC RP</h4>
+        <p>CMMC Registered Practitioner (DoD supply chain)</p>
+      </div>
+      <div class="cert-card">
+        <div class="cert-card-icon"><img src="images/cert-cciso.jpg" alt="Carnegie Mellon CISO" /></div>
+        <h4>Carnegie Mellon CISO</h4>
+        <p>Carnegie Mellon CISO Professional Certificate</p>
+      </div>
+      <div class="cert-card">
+        <div class="cert-card-icon"><img src="images/cert-pmp.png" alt="PMP" /></div>
+        <h4>PMP</h4>
+        <p>Project Management Professional</p>
+      </div>
+      <div class="cert-card">
+        <div class="cert-card-icon"><img src="images/cert-ccsk.png" alt="Cloud Security (CCSK)" /></div>
+        <h4>Cloud Security</h4>
+        <p>Multiple cloud security certifications including FedRAMP expertise</p>
+      </div>
+      <div class="cert-card">
+        <div class="cert-card-icon"><img src="images/cert-cgrc.png" alt="NIST RMF (CGRC)" /></div>
+        <h4>NIST RMF</h4>
+        <p>Risk Management Framework implementation specialist</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FRAMEWORKS -->
+<section class="section frameworks-section">
+  <div class="section-inner">
+    <div class="section-eyebrow">Compliance Frameworks</div>
+    <h2 class="section-h reveal">Connecting Organizations with Every Major Framework</h2>
+    <p class="section-sub reveal">We implement and audit across the full spectrum of federal, international, and industry security standards.</p>
+    <div class="fw-grid">
+      <div class="fw-cell reveal"><div class="fw-cell-icon">🏛️</div><div class="fw-cell-name">NIST RMF</div><div class="fw-cell-desc">Risk Management Framework for federal information systems</div><div class="fw-cell-tag">Federal</div></div>
+      <div class="fw-cell reveal reveal-delay-1"><div class="fw-cell-icon">🔐</div><div class="fw-cell-name">ISO/IEC 27001</div><div class="fw-cell-desc">International standard for information security management</div><div class="fw-cell-tag">International</div></div>
+      <div class="fw-cell reveal reveal-delay-2"><div class="fw-cell-icon">☁️</div><div class="fw-cell-name">FedRAMP</div><div class="fw-cell-desc">Federal Risk and Authorization Management Program</div><div class="fw-cell-tag">Federal</div></div>
+      <div class="fw-cell reveal reveal-delay-3"><div class="fw-cell-icon">🛡️</div><div class="fw-cell-name">CMMC</div><div class="fw-cell-desc">Cybersecurity Maturity Model Certification for DoD</div><div class="fw-cell-tag">DoD</div></div>
+      <div class="fw-cell reveal"><div class="fw-cell-icon">📋</div><div class="fw-cell-name">FISMA</div><div class="fw-cell-desc">Federal Information Security Modernization Act compliance</div><div class="fw-cell-tag">Federal</div></div>
+      <div class="fw-cell reveal reveal-delay-1"><div class="fw-cell-icon">📊</div><div class="fw-cell-name">FISCAM</div><div class="fw-cell-desc">Federal Information System Controls Audit Manual</div><div class="fw-cell-tag">Audit</div></div>
+      <div class="fw-cell reveal reveal-delay-2"><div class="fw-cell-icon">🌐</div><div class="fw-cell-name">UAE NESA</div><div class="fw-cell-desc">National Electronic Security Authority standards</div><div class="fw-cell-tag">UAE</div></div>
+      <div class="fw-cell reveal reveal-delay-3"><div class="fw-cell-icon">🔒</div><div class="fw-cell-name">UAE IAF</div><div class="fw-cell-desc">Information Assurance Framework for UAE entities</div><div class="fw-cell-tag">UAE</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="section testimonials-section">
+  <div class="section-inner">
+    <div class="section-eyebrow">Client Testimonials</div>
+    <h2 class="section-h reveal">Hear from Our Clients</h2>
+    <p class="section-sub reveal">Organizations across the public and private sector trust ECI to guide them through complex compliance requirements.</p>
+    <div class="testimonials-grid">
+      <div class="testi-card reveal">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote">ECI helped us achieve FedRAMP authorization in a timeline we didn't think was possible. Their team's expertise with the RMF process and hands-on support made all the difference. We now have a security program that truly protects our clients' data.</p>
+        <div class="testi-author">
+          <div class="testi-avatar">JM</div>
+          <div>
+            <div class="testi-name">James Mitchell</div>
+            <div class="testi-title">CTO, Federal Technology Solutions</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card reveal reveal-delay-2">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote">We engaged ECI for our ISO 27001 certification and were impressed by how practical and implementable their recommendations were. They didn't just hand us a report — they worked alongside our team every step of the way to build something that actually works.</p>
+        <div class="testi-author">
+          <div class="testi-avatar">SR</div>
+          <div>
+            <div class="testi-name">Sarah Reynolds</div>
+            <div class="testi-title">CISO, Mid-Atlantic Healthcare Group</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card reveal reveal-delay-3">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote">Navigating CMMC requirements as a defense contractor was overwhelming until we partnered with ECI. Dr. Thomas and his team brought deep DoD expertise and walked us through every requirement clearly. We passed our assessment with no findings.</p>
+        <div class="testi-author">
+          <div class="testi-avatar">DK</div>
+          <div>
+            <div class="testi-name">David Kim</div>
+            <div class="testi-title">VP Operations, Aerospace Defense Corp</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOG -->
+<section class="section blog-section">
+  <div class="section-inner">
+    <div class="section-eyebrow">Insights</div>
+    <h2 class="section-h reveal">Recent Articles &amp; Resources</h2>
+    <p class="section-sub reveal">Expert insights on GRC, cybersecurity trends, and compliance best practices from the ECI team.</p>
+    <div class="blog-grid">
+      <div class="blog-card reveal">
+        <div class="blog-img"><img src="images/blog-nist.png" alt="NIST CSF 2.0" /></div>
+        <div class="blog-body">
+          <div class="blog-meta"><span class="blog-tag">GRC</span><span class="blog-date">March 15, 2025</span></div>
+          <h4>What the Updated NIST CSF 2.0 Means for Your Organization</h4>
+          <p>NIST released Cybersecurity Framework 2.0 with significant changes to the core functions and implementation tiers. Here's what you need to know.</p>
+          <a href="#" class="blog-read">Read More →</a>
+        </div>
+      </div>
+      <div class="blog-card reveal reveal-delay-2">
+        <div class="blog-img"><img src="images/blog-cmmc.png" alt="CMMC 2.0" /></div>
+        <div class="blog-body">
+          <div class="blog-meta"><span class="blog-tag">CMMC</span><span class="blog-date">February 28, 2025</span></div>
+          <h4>CMMC 2.0 Final Rule: A Practical Guide for DoD Contractors</h4>
+          <p>The CMMC 2.0 final rule is now in effect. We break down what Level 1, 2, and 3 requirements mean for your compliance roadmap.</p>
+          <a href="#" class="blog-read">Read More →</a>
+        </div>
+      </div>
+      <div class="blog-card reveal reveal-delay-3">
+        <div class="blog-img"><img src="images/blog-fedramp.jpg" alt="FedRAMP Rev 5" /></div>
+        <div class="blog-body">
+          <div class="blog-meta"><span class="blog-tag">FedRAMP</span><span class="blog-date">February 10, 2025</span></div>
+          <h4>FedRAMP Rev 5 Baselines: Key Changes and How to Prepare</h4>
+          <p>FedRAMP's alignment with NIST SP 800-53 Rev 5 introduces updated control baselines. Here's a breakdown of the most impactful changes.</p>
+          <a href="#" class="blog-read">Read More →</a>
+        </div>
+      </div>
+    </div>
+    <div class="blog-cta"><a href="#" class="btn-outline">View All Articles</a></div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section faq-section" id="faq">
+  <div class="section-inner">
+    <div class="section-eyebrow">FAQ</div>
+    <h2 class="section-h">Frequently Asked Questions</h2>
+    <p class="section-sub">Common questions about our GRC and cybersecurity consulting services.</p>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q">What is GRC consulting and why does my organization need it? <span class="faq-toggle">+</span></div>
+        <div class="faq-a"><div class="faq-a-inner">GRC (Governance, Risk, and Compliance) consulting helps organizations build systematic frameworks to manage security risks, meet regulatory requirements, and align security with business objectives. As cyber threats grow and regulations become more complex, a structured GRC approach is essential for protecting your organization and maintaining stakeholder trust.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Do you work with federal contractors and agencies? <span class="faq-toggle">+</span></div>
+        <div class="faq-a"><div class="faq-a-inner">Yes. We specialize in U.S. federal information security requirements including FISMA, FedRAMP, CMMC, FISCAM, and NIST RMF. Dr. Thomas has extensive experience working in air-gapped environments and with DoD contractors navigating the CMMC certification process.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">How long does ISO 27001 certification typically take? <span class="faq-toggle">+</span></div>
+        <div class="faq-a"><div class="faq-a-inner">The timeline varies by organization size and current security maturity, but most organizations can achieve ISO 27001 certification in 6–18 months. Our process begins with a gap analysis to establish a realistic timeline, followed by ISMS development, internal audits, and certification support through the final audit.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Do you serve organizations outside the United States? <span class="faq-toggle">+</span></div>
+        <div class="faq-a"><div class="faq-a-inner">Yes. We have extensive experience with UAE security and privacy standards, including IAF and NESA Standards implementation. We serve clients across the United States and the UAE, with the capability to support organizations in other regions depending on the regulatory framework involved.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">What makes ECI different from other cybersecurity consultants? <span class="faq-toggle">+</span></div>
+        <div class="faq-a"><div class="faq-a-inner">We combine 25+ years of hands-on experience, executive-level credentials (including Carnegie Mellon CISO certification), and a practical approach that goes beyond reports to deliver implementable results. We take a holistic view of governance, risk, and compliance — addressing all three simultaneously rather than in isolation.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <h2 class="reveal">Ready to Strengthen Your Security Posture?</h2>
+  <p class="reveal">Let's discuss your compliance requirements and build a roadmap that protects your organization and meets your regulatory obligations.</p>
+  <div class="cta-btns reveal">
+    <a href="#contact" class="btn-cyan">Schedule a Free Consultation</a>
+    <a href="#services" class="btn-outline">View All Services</a>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section contact-section" id="contact">
+  <div class="section-inner">
+    <div class="section-eyebrow">Contact Us</div>
+    <h2 class="section-h">Get in Touch</h2>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <h3>Let's talk about your compliance needs</h3>
+        <p>Whether you're starting from scratch or need to level up an existing program — our team is ready to help. We typically respond within one business day.</p>
+        <div class="info-block">
+          <div class="info-label">Phone</div>
+          <div class="info-value"><a href="tel:+18776464260">+1 877 644-6260</a></div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">Email</div>
+          <div class="info-value"><a href="mailto:info@econslt.com">info@econslt.com</a></div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">Bethesda, MD</div>
+          <div class="info-value">4938 Hampden Lane #565, Bethesda, MD 20814</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">Stockbridge, GA</div>
+          <div class="info-value">950 Eagles Landing Pkwy #334, Stockbridge, GA 30281</div>
+        </div>
+      </div>
+      <div class="contact-form">
+        <h3>Send Us a Message</h3>
+        <form>
+          <div class="form-row">
+            <div><label>First Name</label><input type="text" placeholder="Jane" /></div>
+            <div><label>Last Name</label><input type="text" placeholder="Smith" /></div>
+          </div>
+          <div><label>Organization</label><input type="text" placeholder="Your Agency or Company" /></div>
+          <div><label>Email</label><input type="email" placeholder="jane@organization.gov" /></div>
+          <div>
+            <label>Service Interest</label>
+            <select>
+              <option value="">Select a service...</option>
+              <option>Governance, Risk &amp; Compliance</option>
+              <option>ISO/IEC 27001 Compliance</option>
+              <option>Vulnerability Assessment</option>
+              <option>Federal InfoSec (FISMA/FedRAMP/CMMC)</option>
+              <option>UAE Security &amp; Privacy Standards</option>
+              <option>Security Program Development</option>
+            </select>
+          </div>
+          <div><label>Message</label><textarea placeholder="Tell us about your compliance challenges or project..."></textarea></div>
+          <button type="submit" class="form-submit">Send Message</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="#">
+          <img src="images/eci-logo.png" alt="eConsultants Inc." style="height:48px;width:auto;filter:brightness(0) invert(1);opacity:0.9;" />
+        </a>
+        <p>Empowering organizations through trusted Governance, Risk, and Compliance consulting since 2000. Serving clients across the US and UAE.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="#">GRC Consulting</a></li>
+          <li><a href="#">ISO 27001</a></li>
+          <li><a href="#">Vulnerability Assessments</a></li>
+          <li><a href="#">Federal InfoSec</a></li>
+          <li><a href="#">UAE Standards</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">About ECI</a></li>
+          <li><a href="#">Leadership</a></li>
+          <li><a href="#">Certifications</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="tel:+18776464260">+1 877 644-6260</a></li>
+          <li><a href="mailto:info@econslt.com">info@econslt.com</a></li>
+          <li><a href="#">Bethesda, MD</a></li>
+          <li><a href="#">Stockbridge, GA</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 eConsultants, Inc. All rights reserved.</p>
+      <p>CISSP · CISA · ISO 27001 · CMMC · FedRAMP</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // FAQ accordion
+  document.querySelectorAll('.faq-item').forEach(item => {
+    item.querySelector('.faq-q').addEventListener('click', () => {
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    });
+  });
+
+  // Scroll reveal
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revealObserver.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+  // Staggered card reveal
+  const cardObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const parent = entry.target;
+        parent.querySelectorAll('.svc-card, .cert-card, .fw-cell, .testi-card, .blog-card, .step-item').forEach((card, i) => {
+          setTimeout(() => { card.style.opacity = '1'; card.style.transform = 'translateY(0)'; }, i * 80);
+        });
+        cardObserver.unobserve(parent);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.services-grid, .certs-grid, .fw-grid, .testimonials-grid, .blog-grid, .process-steps').forEach(g => {
+    g.querySelectorAll('.svc-card, .cert-card, .fw-cell, .testi-card, .blog-card, .step-item').forEach(c => {
+      c.style.opacity = '0'; c.style.transform = 'translateY(24px)';
+      c.style.transition = 'opacity 0.6s cubic-bezier(0.22,1,0.36,1), transform 0.6s cubic-bezier(0.22,1,0.36,1)';
+    });
+    cardObserver.observe(g);
+  });
+
+  // Counter animation
+  const counterObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      entry.target.querySelectorAll('.stat-num').forEach(el => {
+        const target = el.textContent.replace(/[^0-9]/g, '');
+        if (!target) return;
+        const suffix = el.textContent.replace(/[0-9]/g, '');
+        let current = 0;
+        const increment = Math.ceil(parseInt(target) / 40);
+        const timer = setInterval(() => {
+          current = Math.min(current + increment, parseInt(target));
+          el.textContent = current + suffix;
+          if (current >= parseInt(target)) clearInterval(timer);
+        }, 40);
+      });
+      counterObserver.unobserve(entry.target);
+    });
+  }, { threshold: 0.5 });
+  document.querySelectorAll('.stat-grid').forEach(g => counterObserver.observe(g));
+</script>
+</body>
+</html>

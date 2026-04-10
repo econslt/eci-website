@@ -1,0 +1,6 @@
+<svg width="130" height="50" viewBox="0 0 130 50" xmlns="http://www.w3.org/2000/svg">
+  <polygon points="25,4 46,15 46,36 25,47 4,36 4,15" fill="none" stroke="white" stroke-width="1.5"/>
+  <text x="25" y="30" text-anchor="middle" fill="white" font-family="Arial,sans-serif" font-size="8" font-weight="bold">CMMC</text>
+  <text x="58" y="22" fill="white" font-family="Arial,sans-serif" font-size="13" font-weight="900">Cyber</text>
+  <text x="58" y="38" fill="white" font-family="Arial,sans-serif" font-size="13" font-weight="900">AB</text>
+</svg>
