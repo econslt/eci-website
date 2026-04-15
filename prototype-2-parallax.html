@@ -173,16 +173,14 @@
     /* ── PARALLAX DIVIDER ── */
     .parallax-divider {
       height: 340px;
-      background-image: url('images/data-protection.png');
-      background-attachment: fixed;
-      background-size: cover;
-      background-position: center;
+      background: #060a10;
       position: relative;
+      overflow: hidden;
     }
-    .parallax-divider::before {
-      content: '';
+    #stats-canvas {
       position: absolute; inset: 0;
-      background: linear-gradient(135deg, rgba(9,12,18,0.88) 0%, rgba(9,12,18,0.7) 100%);
+      width: 100%; height: 100%;
+      display: block;
     }
     .parallax-divider-inner {
       position: relative; z-index: 1;
@@ -235,16 +233,19 @@
     /* ── PARALLAX CTA ── */
     .parallax-cta {
       padding: 8rem 2rem;
-      background-image: linear-gradient(135deg, rgba(9,12,18,0.92), rgba(9,12,18,0.85)),
-                        url('images/data-protection.png');
-      background-attachment: fixed;
-      background-size: cover;
-      background-position: center top;
+      background: #06080f;
       text-align: center;
       position: relative;
+      overflow: hidden;
       border-top: 1px solid var(--border);
       border-bottom: 1px solid var(--border);
     }
+    #cta-canvas {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      display: block;
+    }
+    .parallax-cta h2, .parallax-cta p, .cta-btns { position: relative; z-index: 1; }
     .parallax-cta h2 { font-family: 'Hanken Grotesk', sans-serif; font-size: clamp(2rem, 4vw, 3rem); font-weight: 900; color: var(--white); letter-spacing: -1px; margin-bottom: 1rem; }
     .parallax-cta p { font-size: 1rem; color: var(--muted); max-width: 500px; margin: 0 auto 2.5rem; }
     .cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
@@ -363,8 +364,6 @@
       .parallax-divider-inner { flex-wrap: wrap; }
       .parallax-stat { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.1); padding: 1.5rem; flex: 1 1 45%; }
       .parallax-stat:last-child { border-bottom: none; }
-      .parallax-divider { background-attachment: scroll; }
-      .parallax-cta { background-attachment: scroll; }
     }
   </style>
 </head>
@@ -482,6 +481,7 @@
 
 <!-- PARALLAX STATS DIVIDER -->
 <div class="parallax-divider">
+  <canvas id="stats-canvas"></canvas>
   <div class="parallax-divider-inner">
     <div class="parallax-stat">
       <div class="parallax-stat-num"><span class="count-up" data-target="25" data-suffix="+">0</span></div>
@@ -564,6 +564,7 @@
 
 <!-- PARALLAX CTA -->
 <div class="parallax-cta">
+  <canvas id="cta-canvas"></canvas>
   <h2 class="reveal">Ready to Strengthen Your Security Posture?</h2>
   <p class="reveal">Let's discuss your compliance requirements and build a roadmap that protects your organization.</p>
   <div class="cta-btns reveal">
@@ -865,6 +866,181 @@
   function loop() {
     particles.forEach(p => p.update());
     draw();
+    requestAnimationFrame(loop);
+  }
+  loop();
+})();
+
+/* ── STATS CANVAS — ambient pulsing nodes ── */
+(function() {
+  const canvas = document.getElementById('stats-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, nodes = [];
+  const COUNT = 55;
+  const MAX_DIST = 100;
+
+  function resize() {
+    W = canvas.width  = canvas.offsetWidth;
+    H = canvas.height = canvas.offsetHeight;
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  function rand(a, b) { return Math.random() * (b - a) + a; }
+
+  function Node() {
+    this.x = rand(0, W);
+    this.y = rand(0, H);
+    this.vx = rand(-0.12, 0.12);
+    this.vy = rand(-0.12, 0.12);
+    this.size = rand(1.5, 3.5);
+    this.baseAlpha = rand(0.3, 0.7);
+    this.alpha = this.baseAlpha;
+    this.pulseSpeed = rand(0.008, 0.02);
+    this.pulseOffset = rand(0, Math.PI * 2);
+    this.isRed = Math.random() < 0.12;
+  }
+  Node.prototype.update = function(t) {
+    this.x += this.vx;
+    this.y += this.vy;
+    if (this.x < 0 || this.x > W) this.vx *= -1;
+    if (this.y < 0 || this.y > H) this.vy *= -1;
+    this.alpha = this.baseAlpha * (0.6 + 0.4 * Math.sin(t * this.pulseSpeed + this.pulseOffset));
+  };
+
+  for (let i = 0; i < COUNT; i++) nodes.push(new Node());
+
+  let t = 0;
+  function loop() {
+    t++;
+    ctx.clearRect(0, 0, W, H);
+
+    // Draw connections
+    for (let i = 0; i < nodes.length; i++) {
+      for (let j = i + 1; j < nodes.length; j++) {
+        const dx = nodes[i].x - nodes[j].x;
+        const dy = nodes[i].y - nodes[j].y;
+        const dist = Math.sqrt(dx*dx + dy*dy);
+        if (dist < MAX_DIST) {
+          const op = (1 - dist / MAX_DIST) * 0.12;
+          ctx.beginPath();
+          ctx.strokeStyle = `rgba(58,132,208,${op})`;
+          ctx.lineWidth = 0.6;
+          ctx.moveTo(nodes[i].x, nodes[i].y);
+          ctx.lineTo(nodes[j].x, nodes[j].y);
+          ctx.stroke();
+        }
+      }
+    }
+
+    // Draw nodes
+    nodes.forEach(n => {
+      n.update(t);
+      const color = n.isRed ? `rgba(204,41,41,${n.alpha})` : `rgba(58,132,208,${n.alpha})`;
+      // Soft glow
+      const grad = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, n.size * 5);
+      grad.addColorStop(0, n.isRed ? `rgba(204,41,41,${n.alpha * 0.3})` : `rgba(58,132,208,${n.alpha * 0.25})`);
+      grad.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, n.size * 5, 0, Math.PI * 2);
+      ctx.fillStyle = grad;
+      ctx.fill();
+      // Core dot
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, n.size, 0, Math.PI * 2);
+      ctx.fillStyle = color;
+      ctx.fill();
+    });
+
+    requestAnimationFrame(loop);
+  }
+  loop();
+})();
+
+/* ── CTA CANVAS — radial pulse rings + scattered particles ── */
+(function() {
+  const canvas = document.getElementById('cta-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H;
+
+  function resize() {
+    W = canvas.width  = canvas.offsetWidth;
+    H = canvas.height = canvas.offsetHeight;
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  function rand(a, b) { return Math.random() * (b - a) + a; }
+
+  // Expanding rings
+  const RING_COUNT = 5;
+  const rings = Array.from({ length: RING_COUNT }, (_, i) => ({
+    phase: (i / RING_COUNT) * Math.PI * 2,
+    speed: 0.004,
+    maxR: 0,   // computed in draw
+    isRed: i === 2
+  }));
+
+  // Scattered particles
+  const particles = Array.from({ length: 35 }, () => ({
+    x: rand(0, 1), y: rand(0, 1),
+    vx: rand(-0.0004, 0.0004), vy: rand(-0.0004, 0.0004),
+    size: rand(1, 2.5),
+    alpha: rand(0.2, 0.55),
+    isRed: Math.random() < 0.3
+  }));
+
+  let t = 0;
+  function loop() {
+    t += 0.5;
+    ctx.clearRect(0, 0, W, H);
+
+    const cx = W / 2, cy = H / 2;
+    const maxR = Math.sqrt(cx*cx + cy*cy) * 0.85;
+
+    // Central glow
+    const glow = ctx.createRadialGradient(cx, cy, 0, cx, cy, maxR * 0.55);
+    glow.addColorStop(0, 'rgba(58,132,208,0.07)');
+    glow.addColorStop(0.4, 'rgba(58,132,208,0.03)');
+    glow.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = glow;
+    ctx.fillRect(0, 0, W, H);
+
+    // Red accent glow offset
+    const rglow = ctx.createRadialGradient(cx * 1.3, cy * 0.7, 0, cx * 1.3, cy * 0.7, maxR * 0.3);
+    rglow.addColorStop(0, 'rgba(204,41,41,0.05)');
+    rglow.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = rglow;
+    ctx.fillRect(0, 0, W, H);
+
+    // Expanding rings
+    rings.forEach(ring => {
+      ring.phase += ring.speed;
+      const progress = (Math.sin(ring.phase) * 0.5 + 0.5); // 0 → 1
+      const r = progress * maxR;
+      const alpha = (1 - progress) * (ring.isRed ? 0.18 : 0.14);
+      if (alpha > 0.005) {
+        ctx.beginPath();
+        ctx.arc(cx, cy, r, 0, Math.PI * 2);
+        ctx.strokeStyle = ring.isRed ? `rgba(204,41,41,${alpha})` : `rgba(58,132,208,${alpha})`;
+        ctx.lineWidth = ring.isRed ? 1 : 1.2;
+        ctx.stroke();
+      }
+    });
+
+    // Scattered particles
+    particles.forEach(p => {
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < 0) p.x = 1; if (p.x > 1) p.x = 0;
+      if (p.y < 0) p.y = 1; if (p.y > 1) p.y = 0;
+      const px = p.x * W, py = p.y * H;
+      const col = p.isRed ? `rgba(204,60,60,${p.alpha})` : `rgba(58,132,208,${p.alpha})`;
+      ctx.beginPath();
+      ctx.arc(px, py, p.size, 0, Math.PI * 2);
+      ctx.fillStyle = col;
+      ctx.fill();
+    });
+
     requestAnimationFrame(loop);
   }
   loop();
