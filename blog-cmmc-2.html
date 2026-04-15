@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CMMC 2.0 Final Rule: A Practical Guide for DoD Contractors | ECI Blog</title>
+  <meta name="description" content="The CMMC 2.0 final rule is now in effect. Learn what Level 1, 2, and 3 requirements mean for your compliance roadmap as a DoD contractor." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #090c12; --bg-2: #0c1018; --bg-3: #101520; --bg-card: #0e1320;
+      --blue: #3a84d0; --blue-dark: #2166b0; --blue-pale: rgba(58,132,208,0.1); --blue-border: rgba(58,132,208,0.22);
+      --red: #cc2929; --red-dark: #a81e1e; --red-pale: rgba(204,41,41,0.1);
+      --white: #ffffff; --off-white: #e2e8f0; --muted: #8899b0;
+      --border: rgba(255,255,255,0.07); --border-light: rgba(255,255,255,0.13);
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--off-white); line-height: 1.6; overflow-x: hidden; }
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; background: #fff; border-bottom: 1px solid rgba(0,0,0,0.1); box-shadow: 0 2px 20px rgba(0,0,0,0.08); }
+    .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 2rem; height: 72px; display: flex; align-items: center; justify-content: space-between; }
+    .nav-links { display: flex; align-items: center; gap: 0.25rem; list-style: none; }
+    .nav-links a { color: #374151; text-decoration: none; font-size: 0.875rem; font-weight: 500; padding: 0.45rem 0.9rem; border-radius: 6px; transition: color 0.15s, background 0.15s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--blue-dark); background: rgba(58,132,208,0.07); }
+    .nav-cta { background: var(--red) !important; color: #fff !important; font-weight: 700 !important; border-radius: 8px !important; padding: 0.5rem 1.25rem !important; }
+    .nav-cta:hover { background: var(--red-dark) !important; color: #fff !important; }
+    .post-hero { padding: 10rem 2rem 4rem; border-bottom: 1px solid var(--border); background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(58,132,208,0.1) 0%, transparent 60%); }
+    .post-hero-inner { max-width: 820px; margin: 0 auto; }
+    .post-breadcrumb { font-size: 0.78rem; color: var(--muted); margin-bottom: 1.5rem; }
+    .post-breadcrumb a { color: var(--blue); text-decoration: none; }
+    .post-breadcrumb a:hover { text-decoration: underline; }
+    .post-meta { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+    .post-tag { font-size: 0.68rem; font-weight: 700; background: var(--blue-pale); color: var(--blue); padding: 0.25rem 0.75rem; border-radius: 100px; }
+    .post-date, .post-read-time { font-size: 0.78rem; color: var(--muted); }
+    .post-hero h1 { font-family: 'Hanken Grotesk', sans-serif; font-size: clamp(2rem, 4vw, 3rem); font-weight: 900; color: var(--white); line-height: 1.15; letter-spacing: -1px; margin-bottom: 1.25rem; }
+    .post-hero .post-excerpt { font-size: 1.05rem; color: var(--muted); line-height: 1.8; }
+    .post-hero-img { max-width: 820px; margin: 3rem auto 0; border-radius: 16px; overflow: hidden; border: 1px solid var(--border); }
+    .post-hero-img img { width: 100%; height: 360px; object-fit: cover; display: block; }
+    .post-body { max-width: 820px; margin: 0 auto; padding: 4rem 2rem 6rem; }
+    .post-content h2 { font-family: 'Hanken Grotesk', sans-serif; font-size: 1.6rem; font-weight: 800; color: var(--white); margin: 2.5rem 0 1rem; letter-spacing: -0.5px; }
+    .post-content h3 { font-family: 'Hanken Grotesk', sans-serif; font-size: 1.15rem; font-weight: 700; color: var(--white); margin: 2rem 0 0.75rem; }
+    .post-content p { font-size: 0.95rem; color: var(--muted); line-height: 1.85; margin-bottom: 1.25rem; }
+    .post-content ul, .post-content ol { padding-left: 1.5rem; margin-bottom: 1.25rem; }
+    .post-content li { font-size: 0.95rem; color: var(--muted); line-height: 1.85; margin-bottom: 0.4rem; }
+    .post-content strong { color: var(--off-white); font-weight: 600; }
+    .post-callout { background: var(--bg-card); border: 1px solid var(--blue-border); border-left: 4px solid var(--blue); border-radius: 8px; padding: 1.5rem 1.75rem; margin: 2rem 0; }
+    .post-callout p { margin: 0; color: var(--off-white); }
+    .level-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 1rem; }
+    .level-card-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; }
+    .level-badge { background: var(--blue-pale); color: var(--blue); font-size: 0.72rem; font-weight: 700; padding: 0.25rem 0.75rem; border-radius: 100px; font-family: 'Hanken Grotesk', sans-serif; }
+    .level-card h3 { font-family: 'Hanken Grotesk', sans-serif; font-weight: 700; color: var(--white); font-size: 1rem; margin: 0; }
+    .level-card p { font-size: 0.875rem; color: var(--muted); margin: 0; line-height: 1.7; }
+    .post-divider { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+    .post-author { display: flex; align-items: center; gap: 1.25rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-top: 3rem; }
+    .author-avatar { width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(135deg, var(--red), var(--blue-dark)); display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 1.1rem; color: #fff; font-family: 'Hanken Grotesk', sans-serif; flex-shrink: 0; }
+    .author-name { font-family: 'Hanken Grotesk', sans-serif; font-weight: 700; color: var(--white); margin-bottom: 0.25rem; }
+    .author-title { font-size: 0.82rem; color: var(--muted); }
+    .post-cta { background: var(--bg-2); border: 1px solid var(--border); border-radius: 16px; padding: 3rem; text-align: center; margin-top: 3rem; }
+    .post-cta h3 { font-family: 'Hanken Grotesk', sans-serif; font-size: 1.4rem; font-weight: 800; color: var(--white); margin-bottom: 0.75rem; }
+    .post-cta p { font-size: 0.9rem; color: var(--muted); margin-bottom: 1.5rem; }
+    .btn-red { background: var(--red); color: #fff; padding: 0.875rem 2rem; border-radius: 8px; font-weight: 700; font-size: 0.9rem; text-decoration: none; display: inline-block; transition: background 0.15s; font-family: 'Hanken Grotesk', sans-serif; }
+    .btn-red:hover { background: var(--red-dark); }
+    .btn-outline { background: transparent; color: var(--white); padding: 0.875rem 2rem; border-radius: 8px; font-weight: 600; font-size: 0.9rem; text-decoration: none; display: inline-block; border: 1px solid var(--border-light); transition: border-color 0.15s, background 0.15s; font-family: 'Hanken Grotesk', sans-serif; margin-left: 0.75rem; }
+    .btn-outline:hover { border-color: var(--blue); background: var(--blue-pale); }
+    .related { margin-top: 4rem; }
+    .related h3 { font-family: 'Hanken Grotesk', sans-serif; font-size: 1.2rem; font-weight: 700; color: var(--white); margin-bottom: 1.5rem; }
+    .related-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+    .related-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; text-decoration: none; display: block; transition: border-color 0.2s, transform 0.2s; }
+    .related-card:hover { border-color: var(--blue-border); transform: translateY(-2px); }
+    .related-card img { width: 100%; height: 140px; object-fit: cover; display: block; }
+    .related-card-body { padding: 1.25rem; }
+    .related-card-body .blog-tag { font-size: 0.65rem; font-weight: 700; background: var(--blue-pale); color: var(--blue); padding: 0.15rem 0.55rem; border-radius: 100px; display: inline-block; margin-bottom: 0.6rem; }
+    .related-card-body h4 { font-family: 'Hanken Grotesk', sans-serif; font-size: 0.9rem; font-weight: 700; color: var(--white); line-height: 1.4; }
+    footer { background: var(--bg-2); border-top: 1px solid var(--border); padding: 3rem 2rem 2rem; }
+    .footer-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+    .footer-copy { font-size: 0.78rem; color: var(--muted); }
+    .footer-back a { font-size: 0.82rem; color: var(--blue); text-decoration: none; font-weight: 600; }
+    @media (max-width: 768px) { .related-grid { grid-template-columns: 1fr; } .nav-links { display: none; } .post-body { padding: 3rem 1.5rem 4rem; } }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="prototype-2-parallax.html">
+      <img src="images/eci-logo.png" alt="eConsultants Inc." style="height:58px;width:auto;" />
+    </a>
+    <ul class="nav-links">
+      <li><a href="prototype-2-parallax.html#services">Services</a></li>
+      <li><a href="prototype-2-parallax.html#about">About</a></li>
+      <li><a href="prototype-2-parallax.html#certifications">Credentials</a></li>
+      <li><a href="blog.html" class="active">Blog</a></li>
+      <li><a href="prototype-2-parallax.html#faq">FAQ</a></li>
+      <li><a href="prototype-2-parallax.html#contact" class="nav-cta">Get Started</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="post-hero">
+  <div class="post-hero-inner">
+    <div class="post-breadcrumb"><a href="blog.html">← Back to Blog</a></div>
+    <div class="post-meta">
+      <span class="post-tag">CMMC</span>
+      <span class="post-date">February 28, 2025</span>
+      <span class="post-read-time">· 8 min read</span>
+    </div>
+    <h1>CMMC 2.0 Final Rule: A Practical Guide for DoD Contractors</h1>
+    <p class="post-excerpt">The Cybersecurity Maturity Model Certification 2.0 final rule is now in effect. We break down what Level 1, 2, and 3 requirements mean for your organization — and the steps you need to take now.</p>
+  </div>
+  <div class="post-hero-img">
+    <img src="images/blog-cmmc.png" alt="CMMC 2.0" />
+  </div>
+</div>
+
+<div class="post-body">
+  <div class="post-content">
+
+    <h2>CMMC 2.0 Is Now the Law</h2>
+    <p>On December 16, 2024, the Department of Defense's final rule codifying CMMC 2.0 went into effect, formally embedding cybersecurity certification requirements into the Defense Federal Acquisition Regulation Supplement (DFARS). For the roughly 300,000 companies in the Defense Industrial Base (DIB), this is no longer a proposal or a pilot — it is a binding requirement that will increasingly appear in contract solicitations throughout 2025 and beyond.</p>
+    <p>The rule represents the culmination of years of development since the original CMMC 1.0 framework, which was dramatically simplified and streamlined into the current three-level structure. Here's what you need to know.</p>
+
+    <h2>Understanding the Three Levels</h2>
+
+    <div class="level-card">
+      <div class="level-card-header">
+        <span class="level-badge">Level 1 — Foundational</span>
+      </div>
+      <h3>17 Practices | Annual Self-Assessment</h3>
+      <p>Level 1 applies to companies that handle Federal Contract Information (FCI) but not Controlled Unclassified Information (CUI). It requires implementation of 17 basic cyber hygiene practices drawn from FAR 52.204-21 — things like access control, incident response basics, and system maintenance. <strong>Companies self-assess annually</strong> and affirm compliance in the Supplier Performance Risk System (SPRS).</p>
+    </div>
+
+    <div class="level-card">
+      <div class="level-card-header">
+        <span class="level-badge">Level 2 — Advanced</span>
+      </div>
+      <h3>110 Practices | Third-Party Assessment (Most Contractors)</h3>
+      <p>Level 2 applies to companies handling CUI and aligns directly with the 110 security requirements in NIST SP 800-171. <strong>Most defense contractors fall into this category.</strong> For contracts involving critical national security information, a third-party assessment by a CMMC Third Party Assessment Organization (C3PAO) is required every three years. For other CUI contracts, annual self-assessment with senior official affirmation may be allowed.</p>
+    </div>
+
+    <div class="level-card">
+      <div class="level-card-header">
+        <span class="level-badge">Level 3 — Expert</span>
+      </div>
+      <h3>110+ Practices | Government-Led Assessment</h3>
+      <p>Level 3 is reserved for companies supporting the DoD's highest-priority programs and adds requirements beyond SP 800-171 drawn from NIST SP 800-172. Assessments are conducted directly by the Defense Contract Management Agency's Defense Industrial Base Cybersecurity Assessment Center (DIBCAC). Only a small subset of contractors will be required to meet Level 3.</p>
+    </div>
+
+    <div class="post-callout">
+      <p><strong>Most contractors need Level 2.</strong> If your organization handles CUI — including technical drawings, specifications, or any information marked with a CUI designation — you are likely a Level 2 candidate. Start your NIST SP 800-171 assessment now if you haven't already.</p>
+    </div>
+
+    <h2>The SPRS Score: Your Compliance Baseline</h2>
+    <p>Under DFARS 252.204-7019 and 7020, DoD contractors are already required to conduct a self-assessment against NIST SP 800-171 and submit a score to the Supplier Performance Risk System. Your SPRS score — which ranges from -203 to 110 — reflects the number of unimplemented practices weighted by criticality.</p>
+    <p>A score of 110 means full compliance. Most organizations score significantly lower, and that's normal — but it requires a <strong>System Security Plan (SSP)</strong> and a <strong>Plan of Action and Milestones (POA&M)</strong> documenting how you will address gaps. Under CMMC 2.0, the SSP and POA&M become formal compliance artifacts that assessors will review.</p>
+
+    <h2>Key Timelines to Know</h2>
+    <ul>
+      <li><strong>Now:</strong> CMMC 2.0 requirements are being phased into DoD contracts. Early solicitations already include CMMC requirements.</li>
+      <li><strong>Phase 1 (2025):</strong> Level 1 and Level 2 self-assessment requirements apply to select contracts.</li>
+      <li><strong>Phase 2 (2026):</strong> Level 2 C3PAO assessment requirements begin appearing in contracts.</li>
+      <li><strong>Phase 3 (2027):</strong> Full implementation across all applicable DoD contracts, including Level 3.</li>
+      <li><strong>Phase 4 (2028):</strong> CMMC requirements apply to all contracts and subcontracts involving FCI or CUI.</li>
+    </ul>
+
+    <h2>Subcontractor Flow-Down: Don't Forget Your Supply Chain</h2>
+    <p>CMMC requirements flow down through the supply chain. If you are a prime contractor required to meet Level 2, your subcontractors who handle CUI must also meet Level 2. This is a frequently overlooked compliance gap — organizations need to assess not just their own posture, but also the security practices of any subcontractors who touch CUI in your program.</p>
+
+    <h2>What to Do Now</h2>
+    <ol>
+      <li><strong>Conduct a NIST SP 800-171 gap assessment</strong> if you haven't done so within the past year. Identify which of the 110 practices you have implemented and which require remediation.</li>
+      <li><strong>Develop or update your System Security Plan (SSP).</strong> This document describes how you implement each of the 110 practices and is a core assessment artifact.</li>
+      <li><strong>Submit your SPRS score.</strong> Ensure your score in SPRS accurately reflects your current implementation status.</li>
+      <li><strong>Build a POA&M.</strong> Document all gaps, assign owners, and establish realistic remediation timelines.</li>
+      <li><strong>Select a C3PAO early.</strong> If you anticipate needing a Level 2 third-party assessment, begin the C3PAO selection process now — qualified assessors are in high demand and scheduling lead times are growing.</li>
+      <li><strong>Assess your subcontractors.</strong> Identify which of your subcontractors handle CUI and ensure they have active compliance programs.</li>
+    </ol>
+
+    <hr class="post-divider" />
+
+    <div class="post-author">
+      <div class="author-avatar">CT</div>
+      <div>
+        <div class="author-name">Dr. Carlos A. Thomas</div>
+        <div class="author-title">Managing Principal, eConsultants, Inc. · CISSP, CISA, CMMC RP, PMP</div>
+      </div>
+    </div>
+
+    <div class="post-cta">
+      <h3>Need CMMC 2.0 readiness support?</h3>
+      <p>ECI is a CMMC Registered Practitioner organization. We help DoD contractors assess their current posture, build their SSP and POA&M, and prepare for C3PAO assessment.</p>
+      <a href="prototype-2-parallax.html#contact" class="btn-red">Talk to a CMMC Expert</a>
+      <a href="blog.html" class="btn-outline">Back to Blog</a>
+    </div>
+
+    <div class="related">
+      <h3>Related Articles</h3>
+      <div class="related-grid">
+        <a href="blog-nist-csf-2.html" class="related-card">
+          <img src="images/blog-nist.png" alt="NIST CSF 2.0" />
+          <div class="related-card-body">
+            <span class="blog-tag">GRC</span>
+            <h4>What the Updated NIST CSF 2.0 Means for Your Organization</h4>
+          </div>
+        </a>
+        <a href="blog-fedramp-rev5.html" class="related-card">
+          <img src="images/blog-fedramp.jpg" alt="FedRAMP Rev 5" />
+          <div class="related-card-body">
+            <span class="blog-tag">FedRAMP</span>
+            <h4>FedRAMP Rev 5 Baselines: Key Changes and How to Prepare</h4>
+          </div>
+        </a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-copy">&copy; 2025 eConsultants, Inc. All rights reserved.</div>
+    <div class="footer-back"><a href="blog.html">← Back to all articles</a></div>
+  </div>
+</footer>
+
+</body>
+</html>
