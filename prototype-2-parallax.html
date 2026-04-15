@@ -187,13 +187,21 @@
     .parallax-divider-inner {
       position: relative; z-index: 1;
       max-width: 1200px; margin: 0 auto;
-      height: 100%; display: flex; align-items: center;
-      padding: 0 2rem; gap: 5rem;
+      height: 100%; display: flex; align-items: center; justify-content: center;
+      padding: 0 2rem; gap: 0;
     }
-    .parallax-stat { text-align: center; }
-    .parallax-stat-num { font-family: 'Hanken Grotesk', sans-serif; font-size: 3.5rem; font-weight: 900; color: var(--white); line-height: 1; margin-bottom: 0.4rem; }
+    .parallax-stat {
+      text-align: center; flex: 1;
+      padding: 0 2.5rem;
+      border-right: 1px solid rgba(255,255,255,0.1);
+      opacity: 0; transform: translateY(24px);
+      transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1);
+    }
+    .parallax-stat:last-child { border-right: none; }
+    .parallax-stat.visible { opacity: 1; transform: translateY(0); }
+    .parallax-stat-num { font-family: 'Hanken Grotesk', sans-serif; font-size: 3.75rem; font-weight: 900; color: var(--white); line-height: 1; margin-bottom: 0.5rem; }
     .parallax-stat-num span { color: var(--blue); }
-    .parallax-stat-label { font-size: 0.8rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 1.5px; }
+    .parallax-stat-label { font-size: 0.78rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 2px; }
 
     /* ── ABOUT (SPLIT) ── */
     .split-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
@@ -350,7 +358,9 @@
       .process-steps { grid-template-columns: 1fr; }
       .footer-top { grid-template-columns: 1fr 1fr; gap: 2rem; }
       .nav-links { display: none; }
-      .parallax-divider-inner { gap: 2rem; flex-wrap: wrap; justify-content: center; }
+      .parallax-divider-inner { flex-wrap: wrap; }
+      .parallax-stat { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.1); padding: 1.5rem; flex: 1 1 45%; }
+      .parallax-stat:last-child { border-bottom: none; }
       .parallax-divider { background-attachment: scroll; }
       .parallax-cta { background-attachment: scroll; }
     }
@@ -889,6 +899,20 @@ document.querySelectorAll('.services-grid, .certs-grid, .fw-grid, .testimonials-
   });
   cardObserver.observe(g);
 });
+
+/* ── STATS ANIMATION ── */
+const statsObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.querySelectorAll('.parallax-stat').forEach((stat, i) => {
+        setTimeout(() => stat.classList.add('visible'), i * 150);
+      });
+      statsObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.3 });
+const statsSection = document.querySelector('.parallax-divider-inner');
+if (statsSection) statsObserver.observe(statsSection);
 
 /* ── FAQ ── */
 document.querySelectorAll('.faq-q').forEach(q => {
