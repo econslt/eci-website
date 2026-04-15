@@ -253,7 +253,9 @@
     .fw-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; margin-top: 3rem; }
     .fw-cell { background: var(--bg-card); padding: 1.75rem 1.5rem; display: flex; flex-direction: column; gap: 0.6rem; transition: background 0.2s; }
     .fw-cell:hover { background: var(--bg-3); }
-    .fw-cell-icon { font-size: 1.5rem; }
+    .fw-cell-icon { height: 44px; display: flex; align-items: center; }
+    .fw-cell-icon img { max-height: 40px; max-width: 110px; width: auto; object-fit: contain; opacity: 0.8; transition: opacity 0.2s; }
+    .fw-cell:hover .fw-cell-icon img { opacity: 1; }
     .fw-cell-name { font-family: 'Hanken Grotesk', sans-serif; font-weight: 700; font-size: 0.95rem; color: var(--white); }
     .fw-cell-desc { font-size: 0.78rem; color: var(--muted); line-height: 1.6; }
     .fw-cell-tag { display: inline-block; font-size: 0.65rem; font-weight: 700; background: var(--blue-pale); color: var(--blue); padding: 0.15rem 0.55rem; border-radius: 100px; align-self: flex-start; }
@@ -481,15 +483,15 @@
 <div class="parallax-divider">
   <div class="parallax-divider-inner">
     <div class="parallax-stat">
-      <div class="parallax-stat-num"><span>25</span>+</div>
+      <div class="parallax-stat-num"><span class="count-up" data-target="25" data-suffix="+">0</span></div>
       <div class="parallax-stat-label">Years Experience</div>
     </div>
     <div class="parallax-stat">
-      <div class="parallax-stat-num"><span>100</span>+</div>
+      <div class="parallax-stat-num"><span class="count-up" data-target="100" data-suffix="+">0</span></div>
       <div class="parallax-stat-label">Clients Served</div>
     </div>
     <div class="parallax-stat">
-      <div class="parallax-stat-num"><span>10</span>+</div>
+      <div class="parallax-stat-num"><span class="count-up" data-target="10" data-suffix="+">0</span></div>
       <div class="parallax-stat-label">Certifications</div>
     </div>
     <div class="parallax-stat">
@@ -576,14 +578,14 @@
     <h2 class="section-h reveal">Every Major Framework</h2>
     <p class="section-sub reveal">We implement and audit across the full spectrum of federal, international, and industry security standards.</p>
     <div class="fw-grid">
-      <div class="fw-cell reveal"><div class="fw-cell-icon">🏛️</div><div class="fw-cell-name">NIST RMF</div><div class="fw-cell-desc">Risk Management Framework for federal information systems</div><div class="fw-cell-tag">Federal</div></div>
-      <div class="fw-cell reveal reveal-delay-1"><div class="fw-cell-icon">🔐</div><div class="fw-cell-name">ISO/IEC 27001</div><div class="fw-cell-desc">International standard for information security management</div><div class="fw-cell-tag">International</div></div>
-      <div class="fw-cell reveal reveal-delay-2"><div class="fw-cell-icon">☁️</div><div class="fw-cell-name">FedRAMP</div><div class="fw-cell-desc">Federal Risk and Authorization Management Program</div><div class="fw-cell-tag">Federal</div></div>
-      <div class="fw-cell reveal reveal-delay-3"><div class="fw-cell-icon">🛡️</div><div class="fw-cell-name">CMMC</div><div class="fw-cell-desc">Cybersecurity Maturity Model Certification for DoD</div><div class="fw-cell-tag">DoD</div></div>
-      <div class="fw-cell reveal"><div class="fw-cell-icon">📋</div><div class="fw-cell-name">FISMA</div><div class="fw-cell-desc">Federal Information Security Modernization Act compliance</div><div class="fw-cell-tag">Federal</div></div>
-      <div class="fw-cell reveal reveal-delay-1"><div class="fw-cell-icon">📊</div><div class="fw-cell-name">FISCAM</div><div class="fw-cell-desc">Federal Information System Controls Audit Manual</div><div class="fw-cell-tag">Audit</div></div>
-      <div class="fw-cell reveal reveal-delay-2"><div class="fw-cell-icon">🌐</div><div class="fw-cell-name">UAE NESA</div><div class="fw-cell-desc">National Electronic Security Authority standards</div><div class="fw-cell-tag">UAE</div></div>
-      <div class="fw-cell reveal reveal-delay-3"><div class="fw-cell-icon">🔒</div><div class="fw-cell-name">UAE IAF</div><div class="fw-cell-desc">Information Assurance Framework for UAE entities</div><div class="fw-cell-tag">UAE</div></div>
+      <div class="fw-cell reveal"><div class="fw-cell-icon"><img src="images/logo-rmf.svg" alt="NIST RMF" /></div><div class="fw-cell-name">NIST RMF</div><div class="fw-cell-desc">Risk Management Framework for federal information systems</div><div class="fw-cell-tag">Federal</div></div>
+      <div class="fw-cell reveal reveal-delay-1"><div class="fw-cell-icon"><img src="images/logo-iso.svg" alt="ISO 27001" /></div><div class="fw-cell-name">ISO/IEC 27001</div><div class="fw-cell-desc">International standard for information security management</div><div class="fw-cell-tag">International</div></div>
+      <div class="fw-cell reveal reveal-delay-2"><div class="fw-cell-icon"><img src="images/logo-fedramp.svg" alt="FedRAMP" /></div><div class="fw-cell-name">FedRAMP</div><div class="fw-cell-desc">Federal Risk and Authorization Management Program</div><div class="fw-cell-tag">Federal</div></div>
+      <div class="fw-cell reveal reveal-delay-3"><div class="fw-cell-icon"><img src="images/logo-cmmc.svg" alt="CMMC" /></div><div class="fw-cell-name">CMMC</div><div class="fw-cell-desc">Cybersecurity Maturity Model Certification for DoD</div><div class="fw-cell-tag">DoD</div></div>
+      <div class="fw-cell reveal"><div class="fw-cell-icon"><img src="images/logo-fisma.svg" alt="FISMA" /></div><div class="fw-cell-name">FISMA</div><div class="fw-cell-desc">Federal Information Security Modernization Act compliance</div><div class="fw-cell-tag">Federal</div></div>
+      <div class="fw-cell reveal reveal-delay-1"><div class="fw-cell-icon"><img src="images/logo-fiscam.svg" alt="FISCAM" /></div><div class="fw-cell-name">FISCAM</div><div class="fw-cell-desc">Federal Information System Controls Audit Manual</div><div class="fw-cell-tag">Audit</div></div>
+      <div class="fw-cell reveal reveal-delay-2"><div class="fw-cell-icon"><img src="images/logo-uae-nesa.svg" alt="UAE NESA" /></div><div class="fw-cell-name">UAE NESA</div><div class="fw-cell-desc">National Electronic Security Authority standards</div><div class="fw-cell-tag">UAE</div></div>
+      <div class="fw-cell reveal reveal-delay-3"><div class="fw-cell-icon"><img src="images/logo-uae-iaf.svg" alt="UAE IAF" /></div><div class="fw-cell-name">UAE IAF</div><div class="fw-cell-desc">Information Assurance Framework for UAE entities</div><div class="fw-cell-tag">UAE</div></div>
     </div>
   </div>
 </section>
@@ -901,11 +903,31 @@ document.querySelectorAll('.services-grid, .certs-grid, .fw-grid, .testimonials-
 });
 
 /* ── STATS ANIMATION ── */
+function animateCount(el) {
+  const target = parseInt(el.dataset.target);
+  const suffix = el.dataset.suffix || '';
+  const duration = 1400;
+  const start = performance.now();
+  function update(now) {
+    const elapsed = now - start;
+    const progress = Math.min(elapsed / duration, 1);
+    const ease = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+    el.textContent = Math.floor(ease * target) + suffix;
+    if (progress < 1) requestAnimationFrame(update);
+    else el.textContent = target + suffix;
+  }
+  requestAnimationFrame(update);
+}
+
 const statsObserver = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
       entry.target.querySelectorAll('.parallax-stat').forEach((stat, i) => {
-        setTimeout(() => stat.classList.add('visible'), i * 150);
+        setTimeout(() => {
+          stat.classList.add('visible');
+          const counter = stat.querySelector('.count-up');
+          if (counter) animateCount(counter);
+        }, i * 150);
       });
       statsObserver.unobserve(entry.target);
     }
