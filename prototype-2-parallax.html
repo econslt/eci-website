@@ -270,7 +270,8 @@
     .testi-quote { font-size: 0.875rem; color: var(--muted); line-height: 1.75; flex: 1; }
     .testi-quote::before { content: '"'; color: var(--red); font-size: 1.5rem; font-style: normal; line-height: 0; vertical-align: -0.4em; margin-right: 0.2rem; }
     .testi-author { display: flex; align-items: center; gap: 0.75rem; border-top: 1px solid var(--border); padding-top: 1rem; }
-    .testi-avatar { width: 42px; height: 42px; border-radius: 50%; background: linear-gradient(135deg, var(--red), var(--blue-dark)); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.9rem; color: #fff; font-family: 'Hanken Grotesk', sans-serif; flex-shrink: 0; }
+    .testi-avatar { width: 46px; height: 46px; border-radius: 50%; overflow: hidden; flex-shrink: 0; border: 2px solid var(--blue-border); background: var(--bg-3); }
+    .testi-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .testi-name { font-family: 'Hanken Grotesk', sans-serif; font-weight: 700; font-size: 0.875rem; color: var(--white); }
     .testi-title { font-size: 0.75rem; color: var(--muted); }
 
@@ -602,17 +603,17 @@
       <div class="testi-card reveal">
         <div class="testi-stars">★★★★★</div>
         <p class="testi-quote">ECI helped us achieve FedRAMP authorization in a timeline we didn't think was possible. Their expertise with the RMF process made all the difference.</p>
-        <div class="testi-author"><div class="testi-avatar">JM</div><div><div class="testi-name">James Mitchell</div><div class="testi-title">CTO, Federal Technology Solutions</div></div></div>
+        <div class="testi-author"><div class="testi-avatar"><img src="images/avatar-james.svg" alt="James Mitchell" /></div><div><div class="testi-name">James Mitchell</div><div class="testi-title">CTO, Federal Technology Solutions</div></div></div>
       </div>
       <div class="testi-card reveal reveal-delay-2">
         <div class="testi-stars">★★★★★</div>
         <p class="testi-quote">We engaged ECI for our ISO 27001 certification and were impressed by how practical their recommendations were. They worked alongside our team every step of the way.</p>
-        <div class="testi-author"><div class="testi-avatar">SR</div><div><div class="testi-name">Sarah Reynolds</div><div class="testi-title">CISO, Mid-Atlantic Healthcare Group</div></div></div>
+        <div class="testi-author"><div class="testi-avatar"><img src="images/avatar-sarah.svg" alt="Sarah Reynolds" /></div><div><div class="testi-name">Sarah Reynolds</div><div class="testi-title">CISO, Mid-Atlantic Healthcare Group</div></div></div>
       </div>
       <div class="testi-card reveal reveal-delay-3">
         <div class="testi-stars">★★★★★</div>
         <p class="testi-quote">Navigating CMMC requirements as a defense contractor was overwhelming until we partnered with ECI. We passed our assessment with no findings.</p>
-        <div class="testi-author"><div class="testi-avatar">DK</div><div><div class="testi-name">David Kim</div><div class="testi-title">VP Operations, Aerospace Defense Corp</div></div></div>
+        <div class="testi-author"><div class="testi-avatar"><img src="images/avatar-david.svg" alt="David Kim" /></div><div><div class="testi-name">David Kim</div><div class="testi-title">VP Operations, Aerospace Defense Corp</div></div></div>
       </div>
     </div>
   </div>
