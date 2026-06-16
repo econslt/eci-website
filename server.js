@@ -278,20 +278,6 @@ async function regenerateBlogIndex(posts) {
   await commitFile(`${DOCS_PATH}/blog.html`, html, 'chore: update blog index');
 }
 
-// ── Debug (remove after confirming GitHub token works) ────────────────────────
-app.get('/api/debug/github', async (req, res) => {
-  try {
-    const { data } = await octokit.repos.getContent({
-      owner: GITHUB_OWNER, repo: GITHUB_REPO,
-      path: `${DOCS_PATH}/posts.json`, ref: GITHUB_BRANCH
-    });
-    const posts = JSON.parse(Buffer.from(data.content, 'base64').toString('utf8')).posts || [];
-    res.json({ ok: true, owner: GITHUB_OWNER, repo: GITHUB_REPO, branch: GITHUB_BRANCH, postCount: posts.length });
-  } catch (e) {
-    res.status(500).json({ ok: false, error: e.message, owner: GITHUB_OWNER, repo: GITHUB_REPO, branch: GITHUB_BRANCH, tokenSet: !!process.env.GITHUB_TOKEN });
-  }
-});
-
 // ── Auth routes ───────────────────────────────────────────────────────────────
 
 app.get('/', (req, res) => res.redirect('/admin'));
