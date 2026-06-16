@@ -1,28 +1,25 @@
 const express = require('express');
 const session = require('express-session');
 const multer  = require('multer');
-const fs      = require('fs');
 const path    = require('path');
+const { Octokit } = require('@octokit/rest');
 
-const app      = express();
-const PORT     = process.env.PORT || 3000;
-const SITE_DIR = __dirname;
-const POSTS_FILE = path.join(SITE_DIR, 'posts.json');
+const app  = express();
+const PORT = process.env.PORT || 3000;
 
-// --- Credentials (change these or use env vars) ---
 const ADMIN_USER = process.env.ADMIN_USER || 'admin';
-const ADMIN_PASS = process.env.ADMIN_PASS || 'ECI@2025!';
+const ADMIN_PASS = process.env.ADMIN_PASS || 'changeme';
 
-// --- Image upload ---
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, path.join(SITE_DIR, 'images')),
-  filename: (req, file, cb) => {
-    const ext = path.extname(file.originalname).toLowerCase();
-    cb(null, `blog-${Date.now()}${ext}`);
-  }
-});
+const GITHUB_OWNER  = process.env.GITHUB_OWNER  || 'econslt';
+const GITHUB_REPO   = process.env.GITHUB_REPO   || 'eci-website';
+const GITHUB_BRANCH = process.env.GITHUB_BRANCH || 'main';
+const DOCS_PATH     = 'docs';
+
+const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
+
+// Memory-based upload — files go to GitHub, not Railway's ephemeral disk
 const upload = multer({
-  storage,
+  storage: multer.memoryStorage(),
   limits: { fileSize: 8 * 1024 * 1024 },
   fileFilter: (req, file, cb) => {
     const ok = /jpeg|jpg|png|gif|webp/.test(file.mimetype);
@@ -33,50 +30,75 @@ const upload = multer({
 app.use(express.json({ limit: '2mb' }));
 app.use(express.urlencoded({ extended: true }));
 app.use(session({
-  secret: process.env.SESSION_SECRET || 'eci-cms-secret-2025',
+  secret: process.env.SESSION_SECRET || 'eci-cms-secret-change-me',
   resave: false,
   saveUninitialized: false,
-  cookie: { maxAge: 8 * 60 * 60 * 1000, httpOnly: true }
+  cookie: {
+    maxAge: 8 * 60 * 60 * 1000,
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production'
+  }
 }));
 
-// Serve website static files (but NOT admin.html directly — handled below)
-app.use(express.static(SITE_DIR, { index: false }));
-
-// Auth guard
 function auth(req, res, next) {
   if (req.session.authenticated) return next();
   res.status(401).json({ error: 'Unauthorized' });
 }
 
-// --- Auth routes ---
-app.get('/admin', (req, res) => res.sendFile(path.join(SITE_DIR, 'admin.html')));
+// ── GitHub API helpers ────────────────────────────────────────────────────────
 
-app.post('/api/login', (req, res) => {
-  const { username, password } = req.body;
-  if (username === ADMIN_USER && password === ADMIN_PASS) {
-    req.session.authenticated = true;
-    return res.json({ success: true });
-  }
-  res.status(401).json({ error: 'Invalid username or password' });
-});
-
-app.post('/api/logout', (req, res) => {
-  req.session.destroy(() => res.json({ success: true }));
-});
-
-app.get('/api/auth', (req, res) => {
-  res.json({ authenticated: !!req.session.authenticated });
-});
-
-// --- Posts helpers ---
-function readPosts() {
-  if (!fs.existsSync(POSTS_FILE)) return [];
-  try { return JSON.parse(fs.readFileSync(POSTS_FILE, 'utf8')).posts || []; }
-  catch (e) { return []; }
+async function getFileSHA(filePath) {
+  try {
+    const { data } = await octokit.repos.getContent({
+      owner: GITHUB_OWNER, repo: GITHUB_REPO, path: filePath, ref: GITHUB_BRANCH
+    });
+    return Array.isArray(data) ? null : data.sha;
+  } catch { return null; }
 }
 
-function writePosts(posts) {
-  fs.writeFileSync(POSTS_FILE, JSON.stringify({ posts }, null, 2));
+async function readGitHubFile(filePath) {
+  const { data } = await octokit.repos.getContent({
+    owner: GITHUB_OWNER, repo: GITHUB_REPO, path: filePath, ref: GITHUB_BRANCH
+  });
+  return Buffer.from(data.content, 'base64').toString('utf8');
+}
+
+async function commitFile(filePath, content, message, isBinary = false) {
+  const sha = await getFileSHA(filePath);
+  const encoded = isBinary
+    ? content.toString('base64')
+    : Buffer.from(content, 'utf8').toString('base64');
+  await octokit.repos.createOrUpdateFileContents({
+    owner: GITHUB_OWNER, repo: GITHUB_REPO,
+    path: filePath, message, content: encoded,
+    sha: sha || undefined, branch: GITHUB_BRANCH
+  });
+}
+
+async function deleteGitHubFile(filePath, message) {
+  const sha = await getFileSHA(filePath);
+  if (!sha) return;
+  await octokit.repos.deleteFile({
+    owner: GITHUB_OWNER, repo: GITHUB_REPO,
+    path: filePath, message, sha, branch: GITHUB_BRANCH
+  });
+}
+
+// ── Posts helpers ─────────────────────────────────────────────────────────────
+
+async function readPosts() {
+  try {
+    const raw = await readGitHubFile(`${DOCS_PATH}/posts.json`);
+    return JSON.parse(raw).posts || [];
+  } catch { return []; }
+}
+
+async function writePosts(posts) {
+  await commitFile(
+    `${DOCS_PATH}/posts.json`,
+    JSON.stringify({ posts }, null, 2),
+    'chore: update posts data'
+  );
 }
 
 function slugify(title) {
@@ -95,66 +117,9 @@ function esc(str) {
     .replace(/"/g, '&quot;');
 }
 
-// --- CRUD routes ---
-app.get('/api/posts', auth, (req, res) => res.json(readPosts()));
+// ── HTML generation ───────────────────────────────────────────────────────────
 
-app.get('/api/posts/:slug', auth, (req, res) => {
-  const post = readPosts().find(p => p.slug === req.params.slug);
-  if (!post) return res.status(404).json({ error: 'Not found' });
-  res.json(post);
-});
-
-app.post('/api/posts', auth, (req, res) => {
-  const posts = readPosts();
-  const post = { ...req.body };
-
-  // Generate unique slug
-  let base = slugify(post.title || 'untitled');
-  let slug = base;
-  let n = 2;
-  while (posts.find(p => p.slug === slug)) slug = `${base}-${n++}`;
-  post.slug = slug;
-  post.createdAt = new Date().toISOString();
-
-  posts.unshift(post);
-  writePosts(posts);
-  generatePostHTML(post);
-  regenerateBlogIndex(posts);
-  res.json(post);
-});
-
-app.put('/api/posts/:slug', auth, (req, res) => {
-  const posts = readPosts();
-  const idx = posts.findIndex(p => p.slug === req.params.slug);
-  if (idx === -1) return res.status(404).json({ error: 'Not found' });
-  posts[idx] = { ...posts[idx], ...req.body, slug: req.params.slug };
-  writePosts(posts);
-  generatePostHTML(posts[idx]);
-  regenerateBlogIndex(posts);
-  res.json(posts[idx]);
-});
-
-app.delete('/api/posts/:slug', auth, (req, res) => {
-  let posts = readPosts();
-  const exists = posts.find(p => p.slug === req.params.slug);
-  if (!exists) return res.status(404).json({ error: 'Not found' });
-  posts = posts.filter(p => p.slug !== req.params.slug);
-  const htmlFile = path.join(SITE_DIR, `${req.params.slug}.html`);
-  if (fs.existsSync(htmlFile)) fs.unlinkSync(htmlFile);
-  writePosts(posts);
-  regenerateBlogIndex(posts);
-  res.json({ success: true });
-});
-
-// Image upload
-app.post('/api/upload', auth, upload.single('image'), (req, res) => {
-  if (!req.file) return res.status(400).json({ error: 'No file uploaded' });
-  res.json({ path: `images/${req.file.filename}` });
-});
-
-// --- HTML generation ---
-function generatePostHTML(post) {
-  // Convert Quill blockquotes to styled callouts
+async function generatePostHTML(post) {
   const content = (post.content || '')
     .replace(/<blockquote>/g, '<div class="post-callout">')
     .replace(/<\/blockquote>/g, '</div>');
@@ -224,14 +189,14 @@ function generatePostHTML(post) {
 <body>
 <nav>
   <div class="nav-inner">
-    <a href="prototype-2-parallax.html"><img src="images/eci-logo.png" alt="eConsultants Inc." style="height:58px;width:auto;" /></a>
+    <a href="index.html"><img src="images/eci-logo.png" alt="eConsultants Inc." style="height:58px;width:auto;" /></a>
     <ul class="nav-links">
-      <li><a href="prototype-2-parallax.html#services">Services</a></li>
-      <li><a href="prototype-2-parallax.html#about">About</a></li>
-      <li><a href="prototype-2-parallax.html#certifications">Credentials</a></li>
+      <li><a href="index.html#services">Services</a></li>
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="index.html#certifications">Credentials</a></li>
       <li><a href="blog.html" class="active">Blog</a></li>
-      <li><a href="prototype-2-parallax.html#faq">FAQ</a></li>
-      <li><a href="prototype-2-parallax.html#contact" class="nav-cta">Get Started</a></li>
+      <li><a href="index.html#faq">FAQ</a></li>
+      <li><a href="index.html#contact" class="nav-cta">Get Started</a></li>
     </ul>
   </div>
 </nav>
@@ -264,7 +229,7 @@ function generatePostHTML(post) {
     ${post.ctaTitle ? `<div class="post-cta">
       <h3>${esc(post.ctaTitle)}</h3>
       <p>${esc(post.ctaText)}</p>
-      <a href="prototype-2-parallax.html#contact" class="btn-red">${esc(post.ctaBtn || 'Get Started')}</a>
+      <a href="index.html#contact" class="btn-red">${esc(post.ctaBtn || 'Get Started')}</a>
       <a href="blog.html" class="btn-outline">Back to Blog</a>
     </div>` : ''}
   </div>
@@ -279,12 +244,18 @@ function generatePostHTML(post) {
 </body>
 </html>`;
 
-  fs.writeFileSync(path.join(SITE_DIR, `${post.slug}.html`), html);
+  await commitFile(
+    `${DOCS_PATH}/${post.slug}.html`,
+    html,
+    `publish: ${post.title}`
+  );
 }
 
-function regenerateBlogIndex(posts) {
-  const blogPath = path.join(SITE_DIR, 'blog.html');
-  if (!fs.existsSync(blogPath)) return;
+async function regenerateBlogIndex(posts) {
+  let html;
+  try {
+    html = await readGitHubFile(`${DOCS_PATH}/blog.html`);
+  } catch { return; }
 
   const cards = posts.map((p, i) => {
     const delay = i > 0 ? ` reveal-delay-${Math.min(i, 3)}` : '';
@@ -299,23 +270,112 @@ function regenerateBlogIndex(posts) {
     </a>`;
   }).join('\n');
 
-  let html = fs.readFileSync(blogPath, 'utf8');
-  // Replace everything between blog-grid tags
   html = html.replace(
     /(<div class="blog-grid">)[\s\S]*?(<\/div>\s*\n<\/div>)/,
     `$1\n${cards}\n  </div>\n</div>`
   );
-  fs.writeFileSync(blogPath, html);
+
+  await commitFile(`${DOCS_PATH}/blog.html`, html, 'chore: update blog index');
 }
 
-// Default route for homepage
-app.get('/', (req, res) => {
-  res.sendFile(path.join(SITE_DIR, 'prototype-2-parallax.html'));
+// ── Auth routes ───────────────────────────────────────────────────────────────
+
+app.get('/admin', (req, res) => res.sendFile(path.join(__dirname, 'admin.html')));
+
+app.post('/api/login', (req, res) => {
+  const { username, password } = req.body;
+  if (username === ADMIN_USER && password === ADMIN_PASS) {
+    req.session.authenticated = true;
+    return res.json({ success: true });
+  }
+  res.status(401).json({ error: 'Invalid username or password' });
+});
+
+app.post('/api/logout', (req, res) => {
+  req.session.destroy(() => res.json({ success: true }));
+});
+
+app.get('/api/auth', (req, res) => {
+  res.json({ authenticated: !!req.session.authenticated });
+});
+
+// ── Post CRUD ─────────────────────────────────────────────────────────────────
+
+app.get('/api/posts', auth, async (req, res) => {
+  try { res.json(await readPosts()); }
+  catch { res.status(500).json({ error: 'Failed to read posts' }); }
+});
+
+app.get('/api/posts/:slug', auth, async (req, res) => {
+  try {
+    const post = (await readPosts()).find(p => p.slug === req.params.slug);
+    if (!post) return res.status(404).json({ error: 'Not found' });
+    res.json(post);
+  } catch { res.status(500).json({ error: 'Failed to read post' }); }
+});
+
+app.post('/api/posts', auth, async (req, res) => {
+  try {
+    const posts = await readPosts();
+    const post  = { ...req.body };
+
+    let base = slugify(post.title || 'untitled');
+    let slug = base, n = 2;
+    while (posts.find(p => p.slug === slug)) slug = `${base}-${n++}`;
+    post.slug      = slug;
+    post.createdAt = new Date().toISOString();
+
+    posts.unshift(post);
+    await writePosts(posts);
+    await generatePostHTML(post);
+    await regenerateBlogIndex(posts);
+    res.json(post);
+  } catch (e) { res.status(500).json({ error: 'Failed to create post' }); }
+});
+
+app.put('/api/posts/:slug', auth, async (req, res) => {
+  try {
+    const posts = await readPosts();
+    const idx   = posts.findIndex(p => p.slug === req.params.slug);
+    if (idx === -1) return res.status(404).json({ error: 'Not found' });
+    posts[idx] = { ...posts[idx], ...req.body, slug: req.params.slug };
+    await writePosts(posts);
+    await generatePostHTML(posts[idx]);
+    await regenerateBlogIndex(posts);
+    res.json(posts[idx]);
+  } catch { res.status(500).json({ error: 'Failed to update post' }); }
+});
+
+app.delete('/api/posts/:slug', auth, async (req, res) => {
+  try {
+    let posts = await readPosts();
+    if (!posts.find(p => p.slug === req.params.slug))
+      return res.status(404).json({ error: 'Not found' });
+    posts = posts.filter(p => p.slug !== req.params.slug);
+    await deleteGitHubFile(`${DOCS_PATH}/${req.params.slug}.html`, `remove: ${req.params.slug}`);
+    await writePosts(posts);
+    await regenerateBlogIndex(posts);
+    res.json({ success: true });
+  } catch { res.status(500).json({ error: 'Failed to delete post' }); }
+});
+
+// Image upload → GitHub
+app.post('/api/upload', auth, upload.single('image'), async (req, res) => {
+  try {
+    if (!req.file) return res.status(400).json({ error: 'No file uploaded' });
+    const ext      = path.extname(req.file.originalname).toLowerCase();
+    const filename = `blog-${Date.now()}${ext}`;
+    await commitFile(
+      `${DOCS_PATH}/images/${filename}`,
+      req.file.buffer,
+      `upload: ${filename}`,
+      true
+    );
+    res.json({ path: `images/${filename}` });
+  } catch { res.status(500).json({ error: 'Failed to upload image' }); }
 });
 
 app.listen(PORT, () => {
   console.log(`\n✅ ECI Blog Admin running`);
-  console.log(`   Site:  http://localhost:${PORT}`);
-  console.log(`   Admin: http://localhost:${PORT}/admin`);
-  console.log(`   Login: ${ADMIN_USER} / ${ADMIN_PASS}\n`);
+  console.log(`   Admin: http://localhost:${PORT}/admin\n`);
 });

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blog & Insights | eConsultants, Inc.</title>
+  <meta name="description" content="Expert insights on GRC, cybersecurity trends, FedRAMP, CMMC, NIST, and compliance best practices from the ECI team." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #090c12; --bg-2: #0c1018; --bg-3: #101520; --bg-card: #0e1320;
+      --blue: #3a84d0; --blue-dark: #2166b0; --blue-pale: rgba(58,132,208,0.1); --blue-border: rgba(58,132,208,0.22);
+      --red: #cc2929; --red-dark: #a81e1e; --red-pale: rgba(204,41,41,0.1);
+      --white: #ffffff; --off-white: #e2e8f0; --muted: #8899b0;
+      --border: rgba(255,255,255,0.07); --border-light: rgba(255,255,255,0.13);
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--off-white); line-height: 1.6; overflow-x: hidden; }
+
+    /* NAV */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; background: #fff; border-bottom: 1px solid rgba(0,0,0,0.1); box-shadow: 0 2px 20px rgba(0,0,0,0.08); }
+    .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 2rem; height: 72px; display: flex; align-items: center; justify-content: space-between; }
+    .nav-links { display: flex; align-items: center; gap: 0.25rem; list-style: none; }
+    .nav-links a { color: #374151; text-decoration: none; font-size: 0.875rem; font-weight: 500; padding: 0.45rem 0.9rem; border-radius: 6px; transition: color 0.15s, background 0.15s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--blue-dark); background: rgba(58,132,208,0.07); }
+    .nav-cta { background: var(--red) !important; color: #fff !important; font-weight: 700 !important; border-radius: 8px !important; padding: 0.5rem 1.25rem !important; }
+    .nav-cta:hover { background: var(--red-dark) !important; color: #fff !important; }
+
+    /* PAGE HEADER */
+    .page-header {
+      padding: 10rem 2rem 5rem;
+      background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(58,132,208,0.12) 0%, transparent 60%);
+      border-bottom: 1px solid var(--border);
+    }
+    .page-header-inner { max-width: 1200px; margin: 0 auto; }
+    .page-header .eyebrow { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2.5px; color: var(--red); margin-bottom: 1rem; }
+    .page-header h1 { font-family: 'Hanken Grotesk', sans-serif; font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 900; color: var(--white); letter-spacing: -1.5px; line-height: 1.1; margin-bottom: 1rem; }
+    .page-header p { font-size: 1.05rem; color: var(--muted); max-width: 540px; line-height: 1.75; }
+
+    /* BLOG GRID */
+    .blog-main { max-width: 1200px; margin: 0 auto; padding: 5rem 2rem; }
+    .blog-filter { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 3rem; }
+    .filter-btn { background: var(--bg-card); border: 1px solid var(--border); color: var(--muted); padding: 0.4rem 1rem; border-radius: 100px; font-size: 0.78rem; font-weight: 600; cursor: pointer; transition: all 0.15s; }
+    .filter-btn:hover, .filter-btn.active { background: var(--blue-pale); border-color: var(--blue-border); color: var(--blue); }
+    .blog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+    .blog-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; transition: border-color 0.2s, transform 0.2s; text-decoration: none; display: block; }
+    .blog-card:hover { border-color: var(--blue-border); transform: translateY(-4px); }
+    .blog-img { height: 200px; overflow: hidden; position: relative; }
+    .blog-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s; }
+    .blog-card:hover .blog-img img { transform: scale(1.04); }
+    .blog-img::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 50%, var(--bg-card)); }
+    .blog-body { padding: 1.5rem; }
+    .blog-meta { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; flex-wrap: wrap; }
+    .blog-tag { font-size: 0.68rem; font-weight: 700; background: var(--blue-pale); color: var(--blue); padding: 0.2rem 0.65rem; border-radius: 100px; }
+    .blog-date { font-size: 0.72rem; color: var(--muted); }
+    .blog-card h3 { font-family: 'Hanken Grotesk', sans-serif; font-size: 1rem; font-weight: 700; color: var(--white); line-height: 1.4; margin-bottom: 0.6rem; }
+    .blog-card p { font-size: 0.82rem; color: var(--muted); line-height: 1.7; margin-bottom: 1.25rem; }
+    .blog-read { font-size: 0.8rem; font-weight: 700; color: var(--blue); display: inline-flex; align-items: center; gap: 0.35rem; transition: gap 0.2s; }
+    .blog-card:hover .blog-read { gap: 0.6rem; }
+
+    /* FOOTER */
+    footer { background: var(--bg-2); border-top: 1px solid var(--border); padding: 4rem 2rem 2rem; }
+    .footer-inner { max-width: 1200px; margin: 0 auto; }
+    .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
+    .footer-brand p { font-size: 0.85rem; color: var(--muted); line-height: 1.7; margin-top: 1.25rem; max-width: 280px; }
+    .footer-col h4 { font-family: 'Hanken Grotesk', sans-serif; font-weight: 700; font-size: 0.85rem; color: var(--white); margin-bottom: 1rem; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+    .footer-col ul a { font-size: 0.83rem; color: var(--muted); text-decoration: none; transition: color 0.15s; }
+    .footer-col ul a:hover { color: var(--blue); }
+    .footer-bottom { border-top: 1px solid var(--border); padding-top: 1.5rem; display: flex; align-items: center; justify-content: space-between; }
+    .footer-copy { font-size: 0.78rem; color: var(--muted); }
+
+    /* REVEAL */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1); }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+
+    @media (max-width: 900px) { .blog-grid { grid-template-columns: repeat(2,1fr); } }
+    @media (max-width: 600px) { .blog-grid { grid-template-columns: 1fr; } .footer-top { grid-template-columns: 1fr 1fr; } .nav-links { display: none; } }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html">
+      <img src="images/eci-logo.png" alt="eConsultants Inc." style="height:58px;width:auto;" />
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html#services">Services</a></li>
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="index.html#certifications">Credentials</a></li>
+      <li><a href="blog.html" class="active">Blog</a></li>
+      <li><a href="index.html#faq">FAQ</a></li>
+      <li><a href="index.html#contact" class="nav-cta">Get Started</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="page-header-inner">
+    <div class="eyebrow">Insights</div>
+    <h1>Articles &amp; Resources</h1>
+    <p>Expert insights on GRC, cybersecurity trends, and compliance best practices from the ECI team.</p>
+  </div>
+</div>
+
+<div class="blog-main">
+  <div class="blog-filter">
+    <button class="filter-btn active">All</button>
+    <button class="filter-btn">GRC</button>
+    <button class="filter-btn">CMMC</button>
+    <button class="filter-btn">FedRAMP</button>
+    <button class="filter-btn">ISO 27001</button>
+    <button class="filter-btn">FISMA</button>
+  </div>
+  <div class="blog-grid">
+    <a href="blog-nist-csf-2.html" class="blog-card reveal">
+      <div class="blog-img"><img src="images/blog-nist.png" alt="NIST CSF 2.0" /></div>
+      <div class="blog-body">
+        <div class="blog-meta"><span class="blog-tag">GRC</span><span class="blog-date">March 15, 2025</span></div>
+        <h3>What the Updated NIST CSF 2.0 Means for Your Organization</h3>
+        <p>NIST released Cybersecurity Framework 2.0 with significant changes to the core functions and implementation tiers. Here's what you need to know to stay compliant.</p>
+        <span class="blog-read">Read More →</span>
+      </div>
+    </a>
+    <a href="blog-cmmc-2.html" class="blog-card reveal reveal-delay-1">
+      <div class="blog-img"><img src="images/blog-cmmc.png" alt="CMMC 2.0" /></div>
+      <div class="blog-body">
+        <div class="blog-meta"><span class="blog-tag">CMMC</span><span class="blog-date">February 28, 2025</span></div>
+        <h3>CMMC 2.0 Final Rule: A Practical Guide for DoD Contractors</h3>
+        <p>The CMMC 2.0 final rule is now in effect. We break down what Level 1, 2, and 3 requirements mean for your compliance roadmap as a DoD contractor.</p>
+        <span class="blog-read">Read More →</span>
+      </div>
+    </a>
+    <a href="blog-fedramp-rev5.html" class="blog-card reveal reveal-delay-2">
+      <div class="blog-img"><img src="images/blog-fedramp.jpg" alt="FedRAMP Rev 5" /></div>
+      <div class="blog-body">
+        <div class="blog-meta"><span class="blog-tag">FedRAMP</span><span class="blog-date">February 10, 2025</span></div>
+        <h3>FedRAMP Rev 5 Baselines: Key Changes and How to Prepare</h3>
+        <p>FedRAMP's alignment with NIST SP 800-53 Rev 5 introduces updated control baselines. Here's a breakdown of the most impactful changes and how to prepare.</p>
+        <span class="blog-read">Read More →</span>
+      </div>
+    </a>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="index.html">
+          <img src="images/eci-logo.png" alt="eConsultants Inc." style="height:48px;width:auto;filter:brightness(0) invert(1);opacity:0.9;" />
+        </a>
+        <p>Empowering organizations through trusted Governance, Risk, and Compliance consulting since 2000. Serving clients across the US and UAE.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="index.html#services">GRC Consulting</a></li>
+          <li><a href="index.html#services">ISO 27001</a></li>
+          <li><a href="index.html#services">Federal InfoSec</a></li>
+          <li><a href="index.html#services">UAE Standards</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="index.html#about">About ECI</a></li>
+          <li><a href="index.html#certifications">Certifications</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Frameworks</h4>
+        <ul>
+          <li><a href="index.html#certifications">NIST RMF</a></li>
+          <li><a href="index.html#certifications">FedRAMP</a></li>
+          <li><a href="index.html#certifications">CMMC</a></li>
+          <li><a href="index.html#certifications">UAE NESA / IAF</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">&copy; 2025 eConsultants, Inc. All rights reserved.</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+const revealEls = document.querySelectorAll('.reveal');
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+}, { threshold: 0.1 });
+revealEls.forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
