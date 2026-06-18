@@ -6,6 +6,7 @@ const path    = require('path');
 const { Octokit } = require('@octokit/rest');
 
 const app  = express();
+app.set('trust proxy', 1); // Railway runs behind a reverse proxy
 const PORT = process.env.PORT || 3000;
 
 const ADMIN_USER = process.env.ADMIN_USER || 'admin';
