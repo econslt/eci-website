@@ -518,8 +518,10 @@ async function uploadImage(input) {
 
 function previewImageUrl(url) {
   const img = document.getElementById('img-preview');
-  if (url) { img.src = url; img.classList.add('show'); }
-  else { img.classList.remove('show'); img.src = ''; }
+  if (url) {
+    const src = url.startsWith('http') ? url : `https://econslt.com/${url}`;
+    img.src = src; img.classList.add('show');
+  } else { img.classList.remove('show'); img.src = ''; }
 }
 
 // ─── Toast ───────────────────────────────────────────
