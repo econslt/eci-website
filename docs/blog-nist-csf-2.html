@@ -85,7 +85,24 @@
     .footer-copy { font-size: 0.78rem; color: var(--muted); }
     .footer-back a { font-size: 0.82rem; color: var(--blue); text-decoration: none; font-weight: 600; }
 
-    @media (max-width: 768px) { .related-grid { grid-template-columns: 1fr; } .nav-links { display: none; } .post-body { padding: 3rem 1.5rem 4rem; } }
+    .nav-hamburger { display: none; flex-direction: column; justify-content: center; gap: 5px; background: none; border: none; cursor: pointer; padding: .5rem; -webkit-tap-highlight-color: transparent; }
+    .nav-hamburger span { display: block; width: 22px; height: 2px; background: #374151; border-radius: 2px; }
+    .nav-mobile-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.45); z-index: 198; cursor: pointer; }
+    .nav-mobile-overlay.open { display: block; }
+    .nav-mobile-panel { position: fixed; top: 0; right: 0; width: min(300px,85vw); height: 100dvh; height: 100vh; background: #fff; z-index: 199; padding: 4.5rem 1.5rem 2rem; transform: translateX(100%); transition: transform .25s cubic-bezier(.22,1,.36,1); display: flex; flex-direction: column; gap: .15rem; overflow-y: auto; box-shadow: -8px 0 32px rgba(0,0,0,.12); }
+    .nav-mobile-panel.open { transform: translateX(0); }
+    .nav-mobile-close { position: absolute; top: 1rem; right: 1rem; background: none; border: none; font-size: 1.3rem; cursor: pointer; color: #374151; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 8px; }
+    .nav-mobile-panel a { display: block; color: #374151; text-decoration: none; font-size: .95rem; font-weight: 500; padding: .7rem 1rem; border-radius: 8px; }
+    .nav-mobile-panel .mob-cta { margin-top: .75rem; background: var(--red); color: #fff !important; font-weight: 700; text-align: center; border-radius: 8px; font-family: 'Hanken Grotesk', sans-serif; }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+      .related-grid { grid-template-columns: 1fr; }
+      .post-hero { padding: 6rem 1.25rem 2.5rem; }
+      .post-body { padding: 2.5rem 1.25rem 4rem; }
+      .post-cta { padding: 2rem 1.25rem; }
+      .post-cta .btn-outline { display: block; margin-left: 0; margin-top: .75rem; text-align: center; }
+    }
   </style>
 </head>
 <body>
@@ -103,8 +120,21 @@
       <li><a href="index.html#faq">FAQ</a></li>
       <li><a href="index.html#contact" class="nav-cta">Get Started</a></li>
     </ul>
+    <button class="nav-hamburger" id="hamburger-btn" onclick="toggleMobileNav()" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </nav>
+<div class="nav-mobile-overlay" id="nav-overlay" onclick="toggleMobileNav()"></div>
+<div class="nav-mobile-panel" id="nav-panel">
+  <button class="nav-mobile-close" onclick="toggleMobileNav()">✕</button>
+  <a href="index.html#services" onclick="toggleMobileNav()">Services</a>
+  <a href="index.html#about" onclick="toggleMobileNav()">About</a>
+  <a href="index.html#certifications" onclick="toggleMobileNav()">Credentials</a>
+  <a href="blog.html" onclick="toggleMobileNav()">Blog</a>
+  <a href="index.html#faq" onclick="toggleMobileNav()">FAQ</a>
+  <a href="index.html#contact" class="mob-cta" onclick="toggleMobileNav()">Get Started</a>
+</div>
 
 <div class="post-hero">
   <div class="post-hero-inner">
@@ -214,5 +244,15 @@
   </div>
 </footer>
 
+<script>
+function toggleMobileNav() {
+  const panel = document.getElementById('nav-panel');
+  const overlay = document.getElementById('nav-overlay');
+  const isOpen = panel.classList.contains('open');
+  panel.classList.toggle('open');
+  overlay.classList.toggle('open');
+  document.body.style.overflow = isOpen ? '' : 'hidden';
+}
+</script>
 </body>
 </html>
