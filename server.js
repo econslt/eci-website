@@ -296,8 +296,8 @@ app.get('/api/debug', async (req, res) => {
 
 // ── Auth routes ───────────────────────────────────────────────────────────────
 
-app.get('/', (req, res) => res.redirect('/admin'));
-app.get('/admin', (req, res) => res.sendFile(path.join(__dirname, 'admin.html')));
+app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'admin.html')));
+app.get('/admin', (req, res) => res.redirect('/'));
 
 app.post('/api/login', (req, res) => {
   const { username, password } = req.body;
